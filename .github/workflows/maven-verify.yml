@@ -6,10 +6,8 @@ name: Maven Verify with CI
 on:
   push:
     branches: [ "main" ]
-    paths: ["yci-*", ".github"]
   pull_request:
     branches: [ "main" ]
-    paths: ["yci-*", ".github"]
 
 jobs:
   maven-verify:
