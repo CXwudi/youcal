@@ -31,6 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Test Stuff ###
 *.ics
 
 ### Sensitive Info ###
