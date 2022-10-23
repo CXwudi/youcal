@@ -4,12 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yci.youtrackcore.model.IssueListRequest
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.exchange
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
@@ -18,8 +13,8 @@ import java.net.URI
  * @author CX无敌
  */
 @Service
-class YouTrackIssueListApi(
-  private val restTemplate: RestTemplate,
+class IssueListApi(
+  private val apiClient: YouTrackApiClient,
 ) {
 
   fun readIssueList(request: IssueListRequest): List<ObjectNode> = readIssueListLazily(request).asSequence().toList()
@@ -90,16 +85,7 @@ class YouTrackIssueListApi(
       .queryParam("\$top", top)
       .queryParam("\$skip", skip)
       .build(true).toUri()
-    log.debug { "query url: $queryUri" }
-    val headers = HttpHeaders().apply {
-      if (bearerToken.isNotBlank()) {
-        add(HttpHeaders.AUTHORIZATION, "Bearer $bearerToken")
-      }
-      add(HttpHeaders.ACCEPT, "application/json")
-    }
-    val request = RequestEntity<String>(headers, HttpMethod.GET, queryUri)
-    val response = restTemplate.exchange<ArrayNode>(request)
-    return response.body ?: throw IllegalStateException("response body is null from $queryUri")
+    return apiClient.get(queryUri, bearerToken)
   }
 }
 

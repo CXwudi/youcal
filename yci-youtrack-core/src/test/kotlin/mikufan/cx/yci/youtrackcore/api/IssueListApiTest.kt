@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import java.net.URI
 
 @SpringBootTest
-class YouTrackIssueListApiTest(
-  private val youTrackIssueListApi: YouTrackIssueListApi,
+class IssueListApiTest(
+  private val issueListApi: IssueListApi,
 ) : ShouldSpec({
   context("url building") {
     val expectedUri =
@@ -24,11 +24,11 @@ class YouTrackIssueListApiTest(
         customFields = listOf("Due Day", "customField2"),
         pageSize = 40
       )
-      youTrackIssueListApi.buildBaseQueryUrl(sampleRequest) shouldBe expectedUri
+      issueListApi.buildBaseQueryUrl(sampleRequest) shouldBe expectedUri
     }
 
     xshould("correctly called pagination url") {
-      val arrayNode = youTrackIssueListApi.doApiCall(expectedUri, "", 40, 0)
+      val arrayNode = issueListApi.doApiCall(expectedUri, "", 40, 0)
       arrayNode[0].shouldBeInstanceOf<ObjectNode>()
       arrayNode.size() shouldBe 40
     }
