@@ -2,12 +2,12 @@ package mikufan.cx.yci.youtrackcore.api
 
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.core.test.Enabled
-import io.kotest.core.test.EnabledOrReasonIf
 import io.kotest.matchers.shouldBe
 import mikufan.cx.yci.youtrackcore.model.BaseYouTrackApiRequest
+import mikufan.cx.yci.youtrackcore.util.ENABLE_BY_TOKEN
+import mikufan.cx.yci.youtrackcore.util.YOUTRACK_TEST_BEARER_TOKEN
+import mikufan.cx.yci.youtrackcore.util.YOUTRACK_TEST_URI
 import org.springframework.boot.test.context.SpringBootTest
-import java.net.URI
 import java.time.ZoneId
 
 @OptIn(ExperimentalKotest::class)
@@ -15,15 +15,12 @@ import java.time.ZoneId
 class UserProfileGeneralApiTest(
   private val userProfileGeneralApi: UserProfileGeneralApi,
 ) : ShouldSpec({
-  val enableByToken: EnabledOrReasonIf = {
-    if (System.getenv("YOUTRACK_BEARER_TOKEN") != null) Enabled.enabled else Enabled.disabled("Skip tests that require YOUTRACK_BEARER_TOKEN")
-  }
-  context("for me").config(enabledOrReasonIf = enableByToken) {
+  context("for me").config(enabledOrReasonIf = ENABLE_BY_TOKEN) {
     should("get zone id") {
       val zoneId = userProfileGeneralApi.getZoneIdOfUser(
         youTrackApiRequest = BaseYouTrackApiRequest(
-          URI("https://youtrack.jetbrains.com/api/"),
-          System.getenv("YOUTRACK_BEARER_TOKEN")
+          YOUTRACK_TEST_URI,
+          YOUTRACK_TEST_BEARER_TOKEN
         )
       )
       zoneId shouldBe ZoneId.of("America/Toronto")

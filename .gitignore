@@ -34,4 +34,4 @@ build/
 *.ics
 
 ### Sensitive Info ###
-/.run/UserProfileGeneralApiTest.run.xml
+/.run/*ApiTest.run.xml
