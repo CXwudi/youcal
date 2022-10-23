@@ -2,16 +2,14 @@ package mikufan.cx.yci.icalcore.poc
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yci.icalcore.util.VEvent
 import mikufan.cx.yci.icalcore.util.toICalTimeZone
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.Property
+import net.fortuna.ical4j.model.component.VAlarm
 import net.fortuna.ical4j.model.component.VEvent
-import net.fortuna.ical4j.model.property.Description
-import net.fortuna.ical4j.model.property.DtEnd
-import net.fortuna.ical4j.model.property.DtStart
-import net.fortuna.ical4j.model.property.ProdId
+import net.fortuna.ical4j.model.parameter.Related
+import net.fortuna.ical4j.model.property.*
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.Duration
 import java.time.LocalDate
@@ -108,6 +106,24 @@ class ICal4jPoc : ShouldSpec({
       println("calendar = \n$calendar")
     }
   }
+  context("VALARM") {
+    should("add an alarm") {
+      val alarm = VAlarm().apply {
+        val trigger = Trigger(Duration.ofMinutes(-10)).apply {
+          add<RelatedTo>(Related.END)
+        }
+        add(Action("DISPLAY"))
+        add(trigger)
+      }
+      val event = VEvent( // create a new event
+        ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
+        ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
+        summary = "A 36 hours hackathon"
+      ).apply {
+        add(Description("Description of the event"))
+        add(alarm)
+      }
+      println("event = \n$event")
+    }
+  }
 })
-
-private val log = KInlineLogging.logger()
