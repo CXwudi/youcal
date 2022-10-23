@@ -15,4 +15,4 @@ internal val timeZoneReg = TimeZoneRegistryFactory.getInstance().createRegistry(
  * @return TimeZone
  */
 fun ZoneId.toICalTimeZone(): TimeZone = timeZoneReg.getTimeZone(id)
-fun TimeZone.toZoneId(): ZoneId = ZoneId.of(id)
+// fun TimeZone.toZoneId(): ZoneId = ZoneId.of(id)
