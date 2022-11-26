@@ -9,5 +9,5 @@ This repo is the remastered version of the original idea from [youcal](https://g
 ## Current Progress
 
 - [x] design
-- [] development
-- [] documentation
+- [ ] development
+- [ ] documentation
