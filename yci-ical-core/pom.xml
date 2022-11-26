@@ -33,11 +33,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <!-- the library doesn't need to be packed as spring boot app
-               otherwise, the re-package goal will break the building process of upper dependencies -->
-          <skip>true</skip>
-        </configuration>
       </plugin>
     </plugins>
   </build>

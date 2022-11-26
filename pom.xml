@@ -26,6 +26,13 @@
     <java.version>17</java.version>
     <kotlin.version>1.7.20</kotlin.version>
     <yci.version>${project.version}</yci.version>
+    <!--
+     by default, we set to true, so that
+     the library doesn't need to be packed as spring boot app
+     otherwise, the re-package goal will break the building process of upper dependencies
+     then we explicitly set it to true for application submodules
+     -->
+    <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
   </properties>
 
   <repositories>
@@ -108,6 +115,9 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <skip>${spring-boot.repackage.skip}</skip>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
