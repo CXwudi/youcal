@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  mikufan.cx.yci.youtrackcore.YouTrackCoreSpringBootAutoConfiguration
+  mikufan.cx.yci.youtrackcore.YouTrackCoreAutoConfiguration
