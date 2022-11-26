@@ -1,5 +1,6 @@
-package mikufan.cx.yci.youtrackcore.model
+package mikufan.cx.yci.youtrackcore.model.issues
 
+import mikufan.cx.yci.youtrackcore.model.BaseYouTrackApiRequest
 import java.net.URI
 
 /**
@@ -7,7 +8,7 @@ import java.net.URI
  * @date 2022-10-09
  * @author CX无敌
  */
-data class IssueListRequest(
+data class IssuesGetRequest(
   override val baseUri: URI,
   override val bearerToken: String,
   val query: String,

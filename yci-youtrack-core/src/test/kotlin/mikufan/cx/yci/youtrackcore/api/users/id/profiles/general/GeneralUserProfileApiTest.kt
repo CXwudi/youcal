@@ -1,4 +1,4 @@
-package mikufan.cx.yci.youtrackcore.api
+package mikufan.cx.yci.youtrackcore.api.users.id.profiles.general
 
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.ShouldSpec
@@ -12,12 +12,12 @@ import java.time.ZoneId
 
 @OptIn(ExperimentalKotest::class)
 @SpringBootTest
-class UserProfileGeneralApiTest(
-  private val userProfileGeneralApi: UserProfileGeneralApi,
+class GeneralUserProfileApiTest(
+  private val generalUserProfileApi: GeneralUserProfileApi,
 ) : ShouldSpec({
   context("for me").config(enabledOrReasonIf = ENABLE_BY_TOKEN) {
     should("get zone id") {
-      val zoneId = userProfileGeneralApi.getZoneIdOfUser(
+      val zoneId = generalUserProfileApi.getZoneIdOfUser(
         youTrackApiRequest = BaseYouTrackApiRequest(
           YOUTRACK_TEST_URI,
           YOUTRACK_TEST_BEARER_TOKEN

@@ -1,9 +1,10 @@
-package mikufan.cx.yci.youtrackcore.api
+package mikufan.cx.yci.youtrackcore.api.issues
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.inlinelogging.KInlineLogging
-import mikufan.cx.yci.youtrackcore.model.IssueListRequest
+import mikufan.cx.yci.youtrackcore.api.YouTrackApiClient
+import mikufan.cx.yci.youtrackcore.model.issues.IssuesGetRequest
 import org.springframework.stereotype.Service
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
@@ -13,18 +14,15 @@ import java.net.URI
  * @author CX无敌
  */
 @Service
-class IssueListApi(
+class IssuesApi(
   private val apiClient: YouTrackApiClient,
 ) {
-
-  fun readIssueList(request: IssueListRequest): List<ObjectNode> = readIssueListLazily(request).asSequence().toList()
-
   /**
    *
    * @param request IssueListRequest
    * @return Iterator<ObjectNode> An iterator that will read the issue list on demand. This iterator is not thread safe
    */
-  fun readIssueListLazily(request: IssueListRequest): Iterator<ObjectNode> = object : Iterator<ObjectNode> {
+  fun readIssueListLazily(request: IssuesGetRequest): Iterator<ObjectNode> = object : Iterator<ObjectNode> {
     val baseQueryUrl = buildBaseQueryUrl(request)
     val top = request.pageSize
     var skip = 0
@@ -64,7 +62,7 @@ class IssueListApi(
     }
   }
 
-  internal fun buildBaseQueryUrl(request: IssueListRequest): URI {
+  internal fun buildBaseQueryUrl(request: IssuesGetRequest): URI {
     val (baseUri, _, query, fields, customFields) = request
     val queryUrl = UriComponentsBuilder.fromUri(baseUri)
       .pathSegment("issues")
