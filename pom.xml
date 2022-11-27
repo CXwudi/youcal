@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
   <modules>
-    <module>yci-youtrack-core</module>
-    <module>yci-ical-core</module>
+    <module>yc-youtrackapi-client</module>
+    <module>yc-ical-core</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -14,12 +14,12 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>mikufan.cx</groupId>
-  <artifactId>youtrack-calendar-integration</artifactId>
+  <artifactId>youcal</artifactId>
   <version>1.0.0</version>
-  <name>Youtrack Calendar Integration</name>
+  <name>Youtrack Due to iCal</name>
   <description>
-    Provide integration between youtrack issue and external calendar,
-    either through iCal or calendar service API
+    Transfer YouTrack Issues' date fields to iCal.
+    Potentially, could support integration between YouTrack and other calendars' service providers through their APIs.
   </description>
 
   <properties>
