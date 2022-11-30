@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  mikufan.cx.yci.icalcore.ICalCoreAutoConfiguration
+  mikufan.cx.yc.icalcore.ICalCoreAutoConfiguration
