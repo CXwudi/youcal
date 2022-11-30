@@ -4,7 +4,7 @@ import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import mikufan.cx.inlinelogging.KInlineLogging
-import mikufan.cx.yc.apiclient.config.ApiServiceProvider
+import mikufan.cx.yc.apiclient.provider.ApiServiceProvider
 import mikufan.cx.yc.apiclient.util.ENABLE_BY_TOKEN
 import mikufan.cx.yc.apiclient.util.YOUTRACK_TEST_BEARER_TOKEN
 import mikufan.cx.yc.apiclient.util.YOUTRACK_TEST_URI
@@ -28,6 +28,7 @@ class IssuesApiTest(
         listOf("idReadable", "summary", "description", "customFields(name,id,value(name,id))"),
         listOf("OS", "Assignee", "State", "Priority", "Type", "Fix versions"),
         5,
+        5
       )
       iterator.hasNext() shouldBe true
       repeat(5) {

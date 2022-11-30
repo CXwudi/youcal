@@ -29,9 +29,10 @@ interface IssuesApi {
     query: String,
     fields: List<String>,
     customFields: List<String>,
+    startAt: Int = 0,
     pageSize: Int,
   ): Iterator<ObjectNode> = object : Iterator<ObjectNode> {
-    var skip = 0
+    var skip = startAt
     val buffer = ArrayDeque<ObjectNode>(pageSize)
     var stillHasMore = true
 
