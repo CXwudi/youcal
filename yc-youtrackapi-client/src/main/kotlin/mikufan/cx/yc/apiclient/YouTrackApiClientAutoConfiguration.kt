@@ -7,4 +7,4 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  * @author CX无敌
  */
 @SpringBootApplication
-class YouTrackCoreAutoConfiguration
+class YouTrackApiClientAutoConfiguration
