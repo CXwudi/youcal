@@ -1,1 +1,2 @@
-mikufan.cx.yc.apiclient.YouTrackApiClientAutoConfiguration
+mikufan.cx.yc.apiclient.config.WebClientConfiguration
+mikufan.cx.yc.apiclient.config.ApiServiceConfiguration
