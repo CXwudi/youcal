@@ -1,2 +1,2 @@
-mikufan.cx.yc.apiclient.config.WebClientConfiguration
-mikufan.cx.yc.apiclient.config.ApiServiceConfiguration
+mikufan.cx.yc.apiclient.config.WebClientAutoConfiguration
+mikufan.cx.yc.apiclient.config.ApiServiceAutoConfiguration

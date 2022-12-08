@@ -7,5 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  *
  * Dependent modules do not import this `@Configuration`, instead of relying on the autoconfiguration in this module
  */
+// @Import(
+//  WebClientAutoConfiguration::class,
+//  ApiServiceAutoConfiguration::class,
+// )
 @SpringBootApplication
 class YouTrackApiClientAutoConfiguration
