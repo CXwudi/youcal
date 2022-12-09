@@ -8,6 +8,7 @@ import mikufan.cx.yc.apiclient.config.ApiServiceAutoConfiguration
 import mikufan.cx.yc.apiclient.config.WebClientAutoConfiguration
 import mikufan.cx.yc.apiclient.config.YouTrackApiAuthInfo
 import mikufan.cx.yc.apiclient.util.ENABLE_BY_TOKEN
+import mikufan.cx.yc.apiclient.util.SpringBootTestWithTestProfile
 import mikufan.cx.yc.apiclient.util.YOUTRACK_TEST_BEARER_TOKEN
 import mikufan.cx.yc.apiclient.util.YOUTRACK_TEST_URI
 import org.assertj.core.api.Assertions.assertThat
@@ -18,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.time.ZoneId
 
 @OptIn(ExperimentalKotest::class)
+@SpringBootTestWithTestProfile
 class UsersApiTest : ShouldSpec({
   val applicationContextRunner = ApplicationContextRunner()
     .withConfiguration(AutoConfigurations.of(YouTrackApiClientAutoConfiguration::class.java))

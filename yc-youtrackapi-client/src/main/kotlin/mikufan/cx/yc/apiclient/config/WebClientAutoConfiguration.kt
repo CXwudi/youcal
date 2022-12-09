@@ -8,16 +8,16 @@ import org.springframework.boot.autoconfigure.web.reactive.function.client.WebCl
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpHeaders
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.support.WebClientAdapter
+import org.springframework.web.service.invoker.HttpServiceProxyFactory
+import java.time.Duration
 
 /**
  * @author CX无敌
  * 2022-11-29
  */
 @AutoConfiguration(after = [WebClientAutoConfiguration::class])
-@ConditionalOnBean(YouTrackApiAuthInfo::class, WebClient.Builder::class)
-class WebClientAutoConfiguration(
-  private val wcBuilder: WebClient.Builder,
-) {
+class WebClientAutoConfiguration {
 
   /**
    * Get a web client for youtrack api
@@ -26,10 +26,21 @@ class WebClientAutoConfiguration(
    */
   @Bean
   @ConditionalOnMissingBean
-  fun youtrackWebClient(authInfo: YouTrackApiAuthInfo): WebClient {
+  @ConditionalOnBean(YouTrackApiAuthInfo::class, WebClient.Builder::class)
+  fun youtrackWebClient(authInfo: YouTrackApiAuthInfo, wcBuilder: WebClient.Builder): WebClient {
     log.debug { "Created new client based on ${authInfo.baseURI}" }
     return wcBuilder.baseUrl(authInfo.baseURI.toString())
       .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer ${authInfo.bearerToken}")
+      .build()
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  @ConditionalOnBean(WebClient::class)
+  fun httpServiceProxyFactory(wc: WebClient): HttpServiceProxyFactory {
+    val webClientAdapter = WebClientAdapter.forClient(wc)
+    return HttpServiceProxyFactory.builder(webClientAdapter)
+      .blockTimeout(Duration.ofSeconds(10))
       .build()
   }
 }

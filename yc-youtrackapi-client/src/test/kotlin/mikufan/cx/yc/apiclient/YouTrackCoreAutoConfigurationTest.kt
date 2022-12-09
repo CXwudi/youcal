@@ -2,18 +2,23 @@ package mikufan.cx.yc.apiclient
 
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.shouldBe
 import mikufan.cx.yc.apiclient.api.issues.IssuesApi
+import mikufan.cx.yc.apiclient.config.ApiServiceAutoConfiguration
+import mikufan.cx.yc.apiclient.config.WebClientAutoConfiguration
 import mikufan.cx.yc.apiclient.config.YouTrackApiAuthInfo
 import mikufan.cx.yc.apiclient.util.YOUTRACK_TEST_URI
 import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.GenericApplicationContext
 import java.util.function.Supplier
 
+// @SpringBootTestWithTestProfile
 class YouTrackCoreAutoConfigurationTest : ShouldSpec({
-  context("an annotation config app ctx") {
+  context("a runApplication app ctx") {
     val ctx = runApplication<YouTrackApiClientAutoConfiguration>() {
       addInitializers(AddConfigInitializer())
     } as GenericApplicationContext
@@ -21,6 +26,37 @@ class YouTrackCoreAutoConfigurationTest : ShouldSpec({
 //      ctx.beanDefinitionNames.forEach { println(it) }
       shouldNotThrow<NoSuchBeanDefinitionException> { ctx.getBean<IssuesApi>() }
     }
+    println(ctx.environment.getProperty("spring.main.web-application-type"))
+    xshould("set non web type") {
+      ctx.environment.getProperty("spring.main.web-application-type") shouldBe "none"
+    }
+  }
+
+  xcontext("a annotation app ctx") {
+    val ctx =
+      AnnotationConfigApplicationContext(YouTrackApiClientAutoConfiguration::class.java)
+    ctx.registerBean(
+      YouTrackApiAuthInfo::class.java,
+      Supplier {
+        YouTrackApiAuthInfo(
+          YOUTRACK_TEST_URI,
+          "admin",
+        )
+      }
+    )
+    ctx.registerBean(
+      WebClientAutoConfiguration::class.java,
+      Supplier {
+        WebClientAutoConfiguration()
+      }
+    )
+    ctx.registerBean(
+      ApiServiceAutoConfiguration::class.java,
+      Supplier {
+        ApiServiceAutoConfiguration()
+      }
+    )
+    ctx.beanDefinitionNames.forEach { println(it) }
   }
 })
 
