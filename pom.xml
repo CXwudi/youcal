@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
   <modules>
-    <module>yc-youtrackapi-client</module>
-    <module>yc-ical-core</module>
+    <module>yc-apiclient-youtrack</module>
+    <module>yc-core-ical</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

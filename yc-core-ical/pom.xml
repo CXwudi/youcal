@@ -7,10 +7,9 @@
     <groupId>mikufan.cx</groupId>
     <version>1.0.0</version>
   </parent>
-  <packaging>jar</packaging>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>yc-youtrackapi-client</artifactId>
+  <artifactId>yc-core-ical</artifactId>
 
   <dependencies>
     <dependency>
@@ -22,14 +21,11 @@
       <artifactId>jackson-module-kotlin</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <groupId>org.mnode.ical4j</groupId>
+      <artifactId>ical4j</artifactId>
+      <version>4.0.0-beta4</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-cache</artifactId>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
 
   <build>
@@ -40,4 +36,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>
