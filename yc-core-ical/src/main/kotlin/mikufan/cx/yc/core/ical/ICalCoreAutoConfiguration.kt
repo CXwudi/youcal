@@ -1,4 +1,4 @@
-package mikufan.cx.yc.icalcore
+package mikufan.cx.yc.core.ical
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 

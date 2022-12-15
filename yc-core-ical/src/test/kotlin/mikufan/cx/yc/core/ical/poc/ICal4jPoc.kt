@@ -1,9 +1,9 @@
-package mikufan.cx.yc.icalcore.poc
+package mikufan.cx.yc.core.ical.poc
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import mikufan.cx.yc.icalcore.util.VEvent
-import mikufan.cx.yc.icalcore.util.toICalTimeZone
+import mikufan.cx.yc.core.ical.util.VEvent
+import mikufan.cx.yc.core.ical.util.toICalTimeZone
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.Property
 import net.fortuna.ical4j.model.component.VAlarm

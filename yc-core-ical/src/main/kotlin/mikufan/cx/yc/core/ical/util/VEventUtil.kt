@@ -1,4 +1,4 @@
-package mikufan.cx.yc.icalcore.util
+package mikufan.cx.yc.core.ical.util
 
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.property.*

@@ -1,4 +1,4 @@
-package mikufan.cx.yc.icalcore
+package mikufan.cx.yc.core.ical
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
