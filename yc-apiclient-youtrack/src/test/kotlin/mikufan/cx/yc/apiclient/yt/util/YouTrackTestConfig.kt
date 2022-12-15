@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.util
+package mikufan.cx.yc.apiclient.yt.util
 
 import io.kotest.core.test.Enabled
 import io.kotest.core.test.EnabledOrReasonIf

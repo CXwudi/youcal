@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.api.issues
+package mikufan.cx.yc.apiclient.yt.api.issues
 
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode

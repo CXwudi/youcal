@@ -1,8 +1,8 @@
-package mikufan.cx.yc.apiclient.config
+package mikufan.cx.yc.apiclient.yt.config
 
 import mikufan.cx.inlinelogging.KInlineLogging
-import mikufan.cx.yc.apiclient.api.issues.IssuesApi
-import mikufan.cx.yc.apiclient.api.users.UsersApi
+import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
+import mikufan.cx.yc.apiclient.yt.api.users.UsersApi
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean

@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.api.users
+package mikufan.cx.yc.apiclient.yt.api.users
 
 import com.fasterxml.jackson.databind.node.ObjectNode
 import org.springframework.web.bind.annotation.PathVariable

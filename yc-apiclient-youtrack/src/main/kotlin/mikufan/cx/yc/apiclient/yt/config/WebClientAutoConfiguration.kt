@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.config
+package mikufan.cx.yc.apiclient.yt.config
 
 import mikufan.cx.inlinelogging.KInlineLogging
 import org.springframework.boot.autoconfigure.AutoConfiguration

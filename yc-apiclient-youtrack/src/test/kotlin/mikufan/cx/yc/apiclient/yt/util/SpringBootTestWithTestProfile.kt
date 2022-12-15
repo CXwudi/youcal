@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.util
+package mikufan.cx.yc.apiclient.yt.util
 
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.core.annotation.AliasFor

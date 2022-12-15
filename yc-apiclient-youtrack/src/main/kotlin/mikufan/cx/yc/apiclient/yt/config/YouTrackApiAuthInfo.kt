@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.config
+package mikufan.cx.yc.apiclient.yt.config
 
 import java.net.URI
 

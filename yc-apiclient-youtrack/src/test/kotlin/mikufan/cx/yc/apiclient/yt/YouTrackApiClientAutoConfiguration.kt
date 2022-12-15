@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient
+package mikufan.cx.yc.apiclient.yt
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
