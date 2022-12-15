@@ -29,11 +29,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Gradle
+      - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build
           build-root-directory: gradle/plugins
+
+      - name: Build with Gradle
+        working-directory: gradle/plugins
+        run: ./gradlew build
+
   
   main-build:
     runs-on: ubuntu-latest
