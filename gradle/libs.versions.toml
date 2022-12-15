@@ -1,0 +1,45 @@
+# version catalog can be used in any gradle build, simply add
+#
+# dependencyResolutionManagement {
+#   versionCatalogs {
+#     create("libs") {
+#       from(files("path/to/libs.versions.toml"))
+#     }
+#   }
+# }
+#
+# to settings.gradle.kts to include the version catalog in your build.
+# any settings.gradle.kts works!
+# see https://docs.gradle.org/current/userguide/platforms.html#sec:sharing-catalogs for more details
+[versions]
+# java version is defined in my.jvm-base.gradle.kts
+# lib versions
+kotlin = "1.7.22"
+springBoot = "3.0.0"
+# plugin dep versions
+# empty for now
+
+[libraries]
+# unless there is a keyword conflict or the name is wired
+# bom, naming convention: bom-<name>
+bom-spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springBoot" }
+bom-kotest = "io.kotest:kotest-bom:5.5.4"
+# plugin dependencies, naming convention: plugin-<name>
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+plugin-spring-boot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "springBoot" }
+plugin-spring-dependency-management = "io.spring.gradle:dependency-management-plugin:1.1.0"
+plugin-freefair-lombok = "io.freefair.lombok:io.freefair.lombok.gradle.plugin:6.6"
+# dependencies, naming convention: dep-<name>
+dep-kotlin-jvm-inline-logging = "com.github.CXwudi:kotlin-jvm-inline-logging:1.0.1"
+dep-kotest-extensions-spring = "io.kotest.extensions:kotest-extensions-spring:1.1.2"
+dep-mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:4.1.0"
+dep-mockk = "io.mockk:mockk:1.13.3"
+dep-spring-mockk = "com.ninja-squad:springmockk:4.0.0"
+dep-ical4j = "org.mnode.ical4j:ical4j:4.0.0-beta4"
+
+[plugins]
+# plugins that are used in main build but not in precompiled script plugins
+# when multiple main builds have similar plugin settings on a plugin here,
+# then it have to be moved to a separated precompiled script plugin
+graalvm-native-image = "org.graalvm.buildtools.native:0.9.19"
