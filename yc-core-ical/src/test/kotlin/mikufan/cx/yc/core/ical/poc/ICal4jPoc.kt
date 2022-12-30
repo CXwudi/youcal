@@ -12,6 +12,7 @@ import net.fortuna.ical4j.model.parameter.Related
 import net.fortuna.ical4j.model.property.*
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.Duration
+import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -76,6 +77,20 @@ class ICal4jPoc : ShouldSpec({
           add(Description("Description of the event"))
         }
         println("event = \n$event")
+      }
+
+      xshould("create using timestamp and timezone explicitly") {
+        // this won't work
+        val vEvent = VEvent().apply {
+          add(
+            DtStart(Instant.ofEpochSecond(1671147000)).apply {
+              add<TzId>(net.fortuna.ical4j.model.parameter.TzId("Asia/Shanghai"))
+            }
+          )
+          add(Duration(Duration.ofHours(36)))
+          add(Summary("A 36 hours hackathon"))
+        }
+        println("vEvent = \n$vEvent")
       }
     }
   }
