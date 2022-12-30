@@ -9,3 +9,9 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-json")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+  kotlinOptions {
+    freeCompilerArgs = freeCompilerArgs + listOf("-Xjvm-default=all")
+  }
+}
