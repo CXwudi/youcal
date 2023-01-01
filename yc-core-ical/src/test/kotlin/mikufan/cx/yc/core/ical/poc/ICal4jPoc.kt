@@ -10,7 +10,6 @@ import net.fortuna.ical4j.model.component.VAlarm
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.parameter.Related
 import net.fortuna.ical4j.model.property.*
-import org.springframework.boot.test.context.SpringBootTest
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -21,7 +20,6 @@ import java.time.ZonedDateTime
  * @date 2022-10-19
  * @author CX无敌
  */
-@SpringBootTest
 class ICal4jPoc : ShouldSpec({
   context("VEVENT") {
     context("whole day event") {
