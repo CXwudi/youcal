@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.yt.config
+package mikufan.cx.yc.apiclient.yt.autoconfig
 
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi

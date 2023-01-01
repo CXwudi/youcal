@@ -4,9 +4,9 @@ import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
-import mikufan.cx.yc.apiclient.yt.config.ApiServiceAutoConfiguration
-import mikufan.cx.yc.apiclient.yt.config.WebClientAutoConfiguration
-import mikufan.cx.yc.apiclient.yt.config.YouTrackApiAuthInfo
+import mikufan.cx.yc.apiclient.yt.autoconfig.ApiServiceAutoConfiguration
+import mikufan.cx.yc.apiclient.yt.autoconfig.WebClientAutoConfiguration
+import mikufan.cx.yc.apiclient.yt.autoconfig.YouTrackApiAuthInfo
 import mikufan.cx.yc.apiclient.yt.util.YOUTRACK_TEST_URI
 import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.beans.factory.getBean

@@ -4,9 +4,9 @@ import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import mikufan.cx.yc.apiclient.yt.YouTrackApiClientAutoConfiguration
-import mikufan.cx.yc.apiclient.yt.config.ApiServiceAutoConfiguration
-import mikufan.cx.yc.apiclient.yt.config.WebClientAutoConfiguration
-import mikufan.cx.yc.apiclient.yt.config.YouTrackApiAuthInfo
+import mikufan.cx.yc.apiclient.yt.autoconfig.ApiServiceAutoConfiguration
+import mikufan.cx.yc.apiclient.yt.autoconfig.WebClientAutoConfiguration
+import mikufan.cx.yc.apiclient.yt.autoconfig.YouTrackApiAuthInfo
 import mikufan.cx.yc.apiclient.yt.util.ENABLE_BY_TOKEN
 import mikufan.cx.yc.apiclient.yt.util.SpringBootTestWithTestProfile
 import mikufan.cx.yc.apiclient.yt.util.YOUTRACK_TEST_BEARER_TOKEN
