@@ -1,4 +1,4 @@
-package mikufan.cx.yc.apiclient.yt.util
+package mikufan.cx.yc.cliapp.util
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.extensions.spring.SpringExtension

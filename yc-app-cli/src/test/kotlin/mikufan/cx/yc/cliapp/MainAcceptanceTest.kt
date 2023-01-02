@@ -1,10 +1,9 @@
 package mikufan.cx.yc.cliapp
 
+import io.kotest.core.extensions.Extension
+import io.kotest.core.spec.style.ShouldSpec
 import mikufan.cx.yc.apiclient.yt.util.SpringBootTestWithTestProfile
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariables
-import org.springframework.beans.factory.annotation.Autowired
+import mikufan.cx.yc.cliapp.util.EnabledByEnvExtension
 
 /**
  * @author CX无敌
@@ -17,17 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired
     "cliapp.datetime.field-type=date"
   ]
 )
-@EnabledIfEnvironmentVariables(
-  EnabledIfEnvironmentVariable(named = "CLIAPP_AUTH_BASE_URI", matches = ".*"),
-  EnabledIfEnvironmentVariable(named = "CLIAPP_AUTH_BEARER_TOKEN", matches = ".*"),
-)
-class Acceptance1Test {
-
-  @Autowired
-  lateinit var main: Main
-
-  @Test
-  fun `should work`() {
+class Acceptance1Test(
+  private val main: Main,
+) : ShouldSpec({
+  should("run") {
     main.run()
   }
+}) {
+  override fun extensions(): List<Extension> = listOf(EnabledByEnvExtension)
 }
