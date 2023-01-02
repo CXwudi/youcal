@@ -1,0 +1,16 @@
+cliapp:
+  auth:
+    base-uri:
+    bearer-token:
+  search:
+    query:
+    page-size: 40
+  datetime:
+    fields:
+    field-type:
+    default-datetime-duration: 10m
+
+
+spring:
+  main:
+    web-application-type: none

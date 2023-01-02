@@ -11,7 +11,7 @@ import java.time.ZoneId
  * @author CX无敌
  * 2022-11-29
  */
-@HttpExchange("users")
+@HttpExchange("/users")
 @JvmDefaultWithCompatibility
 interface UsersApi {
 

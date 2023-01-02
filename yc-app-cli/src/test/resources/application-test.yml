@@ -1,0 +1,17 @@
+cliapp:
+  auth:
+    base-uri: https://youtrack.jetbrains.com/api/
+    bearer-token: Can be empty for this youtrack
+  search:
+    query: "project: {Toolbox App}"
+    page-size: 40
+  datetime:
+    fields: "created"
+    field-type: DATE
+    default-datetime-duration: 10m
+
+logging:
+  level:
+    mikufan:
+      cx:
+        yc: debug

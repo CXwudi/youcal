@@ -12,7 +12,7 @@ import org.springframework.web.service.annotation.HttpExchange
  * 2022-11-29
  */
 // you can't make it private nor can proxy class make method private
-@HttpExchange("issues")
+@HttpExchange("/issues")
 @JvmDefaultWithCompatibility
 interface IssuesApi {
 
@@ -55,13 +55,13 @@ interface IssuesApi {
 
     private fun readNewPage() {
       if (stillHasMore) {
-        log.debug { "reading issue list $query starting from $skip of amount $pageSize" }
+        log.debug { "reading issue list `$query` starting from $skip of amount $pageSize" }
         val partialList = getIssues(query, fields.joinToString(","), customFields, skip, pageSize)
         buffer.addAll(partialList.map { it as ObjectNode })
         skip += pageSize
         stillHasMore = partialList.size() == pageSize
       } else {
-        log.debug { "no more issue to read from $query" }
+        log.debug { "no more issue to read from `$query`" }
       }
     }
   }
