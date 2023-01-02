@@ -17,7 +17,7 @@ class OneDayEventDate(
 ) : EventDateTime {
   val start: LocalDate = startInternal.toLocalDate()
 
-  fun toLocalDateOf(zoneId: ZoneId): LocalDate {
+  fun startOf(zoneId: ZoneId): LocalDate {
     return startInternal.withZoneSameInstant(zoneId).toLocalDate()
   }
 }

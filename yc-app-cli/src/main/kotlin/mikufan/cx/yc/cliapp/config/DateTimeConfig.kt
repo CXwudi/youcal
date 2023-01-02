@@ -8,7 +8,7 @@ import mikufan.cx.yc.apiclient.yt.api.users.UsersApi
 import mikufan.cx.yc.core.ical.model.DateTimeFieldType
 import mikufan.cx.yc.core.ical.model.EventDateTimeField
 import mikufan.cx.yc.core.ical.model.EventType
-import mikufan.cx.yc.core.ical.model.OneDayEventField
+import mikufan.cx.yc.core.ical.model.OneEventField
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -45,25 +45,29 @@ class DateTimeConfigConfiguration {
       DateTimeFieldType.DATE -> EventType.ONE_DAY_EVENT
       DateTimeFieldType.DATETIME -> EventType.DURATION_DATE_TIME_EVENT
     },
-    fields = OneDayEventField(raw.fields[0]),
-    duration = when (raw.fieldType) {
+    fields = OneEventField(raw.fields[0]),
+    defaultDuration = when (raw.fieldType) {
       DateTimeFieldType.DATE -> null
       DateTimeFieldType.DATETIME -> requireNotNull(raw.defaultDatetimeDuration) {
         "defaultDatetimeDuration must be provided when fieldType is DATETIME"
       }
     },
-    zoneId = raw.zoneId ?: let {
-      log.info { "Determining the zone id of the current bearer token by calling the API" }
-      usersApi.getZoneIdOfUser()
+    zoneIdProvider = {
+      raw.zoneId ?: let {
+        log.info { "Determining the zone id of the current bearer token by calling the API" }
+        usersApi.getZoneIdOfUser()
+      }
     }
   )
 }
 
-data class DateTimeConfig(
+class DateTimeConfig(
   val eventType: EventType,
   val fields: EventDateTimeField,
-  val duration: Duration? = null,
-  val zoneId: ZoneId,
-)
+  val defaultDuration: Duration? = null,
+  zoneIdProvider: () -> ZoneId,
+) {
+  val zoneId: ZoneId by lazy(zoneIdProvider)
+}
 
 private val log = KInlineLogging.logger()

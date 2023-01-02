@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
 import mikufan.cx.yc.cliapp.config.DateTimeConfig
 import mikufan.cx.yc.cliapp.config.SearchConfig
-import mikufan.cx.yc.core.ical.model.DurationEventFields
-import mikufan.cx.yc.core.ical.model.OneDayEventField
+import mikufan.cx.yc.core.ical.model.OneEventField
+import mikufan.cx.yc.core.ical.model.StartEndEventFields
 import mikufan.cx.yc.core.ical.model.YouTrackDefaultDateTime
 import org.springframework.stereotype.Component
 
@@ -24,7 +24,13 @@ class IssuesGetter(
     val (youtrackFields, customFields) = getFields(dateTimeConfig)
     return issuesApi.getIssuesLazily(
       query = searchConfig.query,
-      fields = listOf("id", "idReadable", "summary", "description") + youtrackFields,
+      fields = listOf(
+        "id",
+        "idReadable",
+        "summary",
+        "description",
+        "customFields(name,id,value(name,id))"
+      ) + youtrackFields,
       customFields = customFields,
       pageSize = searchConfig.pageSize,
     )
@@ -35,7 +41,7 @@ class IssuesGetter(
     val youtrackFields = mutableListOf<String>()
     val customFields = mutableListOf<String>()
     when (dateTimeFields) {
-      is OneDayEventField -> {
+      is OneEventField -> {
         val field = dateTimeFields.field
         if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(field)) {
           youtrackFields.add(field)
@@ -44,14 +50,15 @@ class IssuesGetter(
         }
       }
 
-      is DurationEventFields -> {
-        listOf(dateTimeFields.startField, dateTimeFields.endField).forEach { field ->
-          if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(field)) {
-            youtrackFields.add(field)
-          } else {
-            customFields.add(field)
-          }
-        }
+      is StartEndEventFields -> {
+        TODO("will support later")
+//        listOf(dateTimeFields.startField, dateTimeFields.endField).forEach { field ->
+//          if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(field)) {
+//            youtrackFields.add(field)
+//          } else {
+//            customFields.add(field)
+//          }
+//        }
       }
     }
     return youtrackFields to customFields

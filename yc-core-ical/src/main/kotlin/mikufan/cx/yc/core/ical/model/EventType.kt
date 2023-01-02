@@ -14,4 +14,6 @@ enum class EventType {
    * The event is a duration event, with precision of time.
    */
   DURATION_DATE_TIME_EVENT,
+
+  // TODO: the start end date time event, start end date event
 }
