@@ -51,14 +51,14 @@ class IssuesGetter(
       }
 
       is StartEndEventFields -> {
+        listOf(dateTimeFields.startField, dateTimeFields.endField).forEach { field ->
+          if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(field)) {
+            youtrackFields.add(field)
+          } else {
+            customFields.add(field)
+          }
+        }
         TODO("will support later")
-//        listOf(dateTimeFields.startField, dateTimeFields.endField).forEach { field ->
-//          if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(field)) {
-//            youtrackFields.add(field)
-//          } else {
-//            customFields.add(field)
-//          }
-//        }
       }
     }
     return youtrackFields to customFields
