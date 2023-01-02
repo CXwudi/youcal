@@ -1,4 +1,6 @@
 cliapp:
+  io:
+    output-file: ./test-output/test.ics
   auth:
     base-uri: https://youtrack.jetbrains.com/api/
     bearer-token: Can be empty for this youtrack

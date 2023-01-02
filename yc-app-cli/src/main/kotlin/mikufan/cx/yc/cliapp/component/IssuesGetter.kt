@@ -30,7 +30,7 @@ class IssuesGetter(
     )
   }
 
-  internal fun getFields(dateTimeConfig: DateTimeConfig): Pair<MutableList<String>, MutableList<String>> {
+  internal fun getFields(dateTimeConfig: DateTimeConfig): Pair<List<String>, List<String>> {
     val dateTimeFields = dateTimeConfig.fields
     val youtrackFields = mutableListOf<String>()
     val customFields = mutableListOf<String>()

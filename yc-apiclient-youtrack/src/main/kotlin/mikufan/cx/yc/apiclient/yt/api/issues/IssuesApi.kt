@@ -25,6 +25,14 @@ interface IssuesApi {
     @RequestParam("\$top") top: Int,
   ): ArrayNode
 
+  @GetExchange
+  fun getIssues(
+    @RequestParam("query") query: String,
+    @RequestParam("fields") fields: String,
+    @RequestParam("\$skip") skip: Int,
+    @RequestParam("\$top") top: Int,
+  ): ArrayNode
+
   fun getIssuesLazily(
     query: String,
     fields: List<String>,
@@ -56,7 +64,11 @@ interface IssuesApi {
     private fun readNewPage() {
       if (stillHasMore) {
         log.debug { "reading issue list `$query` starting from $skip of amount $pageSize" }
-        val partialList = getIssues(query, fields.joinToString(","), customFields, skip, pageSize)
+        val partialList = if (customFields.isEmpty()) {
+          getIssues(query, fields.joinToString(","), skip, pageSize)
+        } else {
+          getIssues(query, fields.joinToString(","), customFields, skip, pageSize)
+        }
         buffer.addAll(partialList.map { it as ObjectNode })
         skip += pageSize
         stillHasMore = partialList.size() == pageSize

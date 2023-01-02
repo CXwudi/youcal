@@ -1,4 +1,6 @@
 cliapp:
+  io:
+    output-file:
   auth:
     base-uri:
     bearer-token:

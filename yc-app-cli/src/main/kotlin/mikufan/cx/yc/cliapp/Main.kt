@@ -1,5 +1,7 @@
 package mikufan.cx.yc.cliapp
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.cliapp.component.IssuesGetter
 import org.springframework.beans.factory.getBean
@@ -23,11 +25,10 @@ private val log = KInlineLogging.logger()
 class Main(
   private val issuesGetter: IssuesGetter,
 ) : Runnable {
-  override fun run() {
+
+  override fun run(): Unit = runBlocking(Dispatchers.Default) {
     log.info { "Getting issues" }
     val issuesIterator = issuesGetter.issuesIterator()
-    for (issue in issuesIterator) {
-      log.info { "Got issue: $issue" }
-    }
+    issuesIterator.asSequence().firstOrNull()?.let { log.info { "First issue: $it" } }
   }
 }
