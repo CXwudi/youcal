@@ -2,7 +2,9 @@ package mikufan.cx.yc.core.ical.poc
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import mikufan.cx.yc.core.ical.util.VEvent
+import mikufan.cx.yc.core.ical.util.addCommonProperties
+import mikufan.cx.yc.core.ical.util.setDtEndWithZoneId
+import mikufan.cx.yc.core.ical.util.setDtStartWithZoneId
 import mikufan.cx.yc.core.ical.util.toICalTimeZone
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.Property
@@ -15,6 +17,31 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.temporal.TemporalAmount
+
+fun createVEvent(
+  startZonedDateTime: ZonedDateTime,
+  endZonedDateTime: ZonedDateTime,
+  id: String? = null,
+  summary: String? = null,
+  description: String? = null,
+): VEvent = VEvent().apply {
+  setDtStartWithZoneId(startZonedDateTime)
+  setDtEndWithZoneId(endZonedDateTime)
+  addCommonProperties(id, summary, description)
+}
+
+fun createVEvent(
+  startZonedDateTime: ZonedDateTime,
+  duration: TemporalAmount,
+  id: String? = null,
+  summary: String? = null,
+  description: String? = null,
+): VEvent = VEvent().apply {
+  setDtStartWithZoneId(startZonedDateTime)
+  add(Duration(duration))
+  addCommonProperties(id, summary, description)
+}
 
 /**
  * @date 2022-10-19
@@ -56,7 +83,7 @@ class ICal4jPoc : ShouldSpec({
 
     context("duration event") {
       should("create a 36 hours hackathon") {
-        val event = VEvent(
+        val event = createVEvent(
           ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           Duration.ofHours(36),
           summary = "A 36 hours hackathon"
@@ -67,7 +94,7 @@ class ICal4jPoc : ShouldSpec({
       }
 
       should("create a 36 hours hackathon with start end date time") {
-        val event = VEvent( // create a new event
+        val event = createVEvent( // create a new event
           ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           summary = "A 36 hours hackathon"
@@ -105,7 +132,7 @@ class ICal4jPoc : ShouldSpec({
         add(javaZoneId.toICalTimeZone().vTimeZone)
         add(ProdId("Calendar1"))
       }.fluentTarget.withDefaults().fluentTarget
-      val event1 = VEvent( // create a new event
+      val event1 = createVEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         "H1",
@@ -133,7 +160,7 @@ class ICal4jPoc : ShouldSpec({
         add(Action("DISPLAY"))
         add(trigger)
       }
-      val event = VEvent( // create a new event
+      val event = createVEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
         summary = "A 36 hours hackathon"

@@ -1,47 +1,32 @@
 package mikufan.cx.yc.core.ical.component
 
-import com.fasterxml.jackson.databind.node.ObjectNode
-import mikufan.cx.yc.core.ical.model.OneDayIssueInfo
 import mikufan.cx.yc.core.ical.model.ToBeMappedYouTrackIssueInfo
-import mikufan.cx.yc.core.ical.model.exception.MappingException
-import mikufan.cx.yc.core.ical.util.YouTrackDefaultDateTime
-import mikufan.cx.yc.core.ical.util.YouTrackType
+import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
+import mikufan.cx.yc.core.ical.util.addCommonProperties
 import net.fortuna.ical4j.model.component.VEvent
-import java.time.Instant
 
 /**
  * @author CX无敌
  * 2023-01-02
  */
-class EventMapper {
+class EventMapper(
+  private val dateTimeFieldSetter: DateTimeFieldSetter,
+) {
 
   fun doMap(toBeMapped: ToBeMappedYouTrackIssueInfo): VEvent {
-    val mapped = when (toBeMapped) {
-      is OneDayIssueInfo -> mapOneDayIssue(toBeMapped)
-      else -> TODO("not implemented yet")
-    }
-    return mapped
+    val json = toBeMapped.json
+    val dateTimeFieldInfo = toBeMapped.dateTimeFieldInfo
+    val vEvent = VEvent()
+    dateTimeFieldSetter.doMapAndSet(vEvent, json, dateTimeFieldInfo)
+    vEvent.addCommonPropertiesFrom(json)
+
+    return vEvent
   }
 
-  private fun mapOneDayIssue(toBeMapped: OneDayIssueInfo): VEvent {
-    val (json, dateTimeFieldInfo, alarmSetting, otherMappings) = toBeMapped
-    val fieldName = dateTimeFieldInfo.fieldName
-    val startDateStr = if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(fieldName)) {
-      json[fieldName].asText()
-    } else {
-      val customField = json.getCustomField(fieldName, YouTrackType.DATE_ISSUE_CUSTOM_FIELD)
-      customField["value"].asText()
-    }
-    val startDate = Instant.ofEpochMilli(startDateStr.toLong())
-    TODO()
-  }
-
-  private fun ObjectNode.getCustomField(fieldName: String, expectedType: String = ""): ObjectNode {
-    val customField: ObjectNode = get("customFields").find { it["name"].asText() == fieldName } as ObjectNode?
-      ?: throw MappingException("Cannot find custom field $fieldName in $this")
-    if (customField["\$type"].asText() != expectedType) {
-      throw MappingException("Custom field $fieldName is not of type $expectedType")
-    }
-    return customField
+  private fun VEvent.addCommonPropertiesFrom(json: YouTrackIssueJson) {
+    val idReadable = json["idReadable"].asText()
+    val summary = "$idReadable - ${json["summary"].asText()}"
+    val description = json["description"].asText()
+    addCommonProperties(idReadable, summary, description)
   }
 }

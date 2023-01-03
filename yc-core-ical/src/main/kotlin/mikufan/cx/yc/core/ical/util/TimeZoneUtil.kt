@@ -4,7 +4,7 @@ import net.fortuna.ical4j.model.TimeZone
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory
 import java.time.ZoneId
 
-internal val timeZoneReg = TimeZoneRegistryFactory.getInstance().createRegistry()
+internal val timeZoneReg by lazy { TimeZoneRegistryFactory.getInstance().createRegistry() }
 
 /**
  * get the iCal4j time zone object from a java time zone id
