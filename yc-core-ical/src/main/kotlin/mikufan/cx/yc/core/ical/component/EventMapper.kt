@@ -24,7 +24,8 @@ class EventMapper {
   }
 
   private fun mapOneDayIssue(toBeMapped: OneDayIssueInfo): VEvent {
-    val (json, fieldName, alarmSetting, otherMappings) = toBeMapped
+    val (json, dateTimeFieldInfo, alarmSetting, otherMappings) = toBeMapped
+    val fieldName = dateTimeFieldInfo.fieldName
     val startDateStr = if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(fieldName)) {
       json[fieldName].asText()
     } else {
