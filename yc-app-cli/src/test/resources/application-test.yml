@@ -8,9 +8,11 @@ cliapp:
     query: "project: {Toolbox App}"
     page-size: 40
   datetime:
-    fields: "created"
-    field-type: DATE
-    default-datetime-duration: 10m
+    event-type: ONE_DAY_EVENT
+    field-names: "created"
+    default-duration: 10m
+    additional-parameters:
+    zone-id:
 
 logging:
   level:

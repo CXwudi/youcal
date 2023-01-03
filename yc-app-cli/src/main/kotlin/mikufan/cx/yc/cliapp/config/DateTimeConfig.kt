@@ -1,14 +1,14 @@
 package mikufan.cx.yc.cliapp.config
 
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.apiclient.yt.api.users.UsersApi
-import mikufan.cx.yc.core.ical.model.DateTimeFieldType
-import mikufan.cx.yc.core.ical.model.EventDateTimeField
+import mikufan.cx.yc.cliapp.config.validation.TimeZoneFormat
+import mikufan.cx.yc.core.ical.model.EventDateTimeFieldName
 import mikufan.cx.yc.core.ical.model.EventType
-import mikufan.cx.yc.core.ical.model.OneEventField
+import mikufan.cx.yc.core.ical.model.OneFieldName
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,46 +24,49 @@ import java.time.ZoneId
 @ConfigurationProperties(prefix = "cliapp.datetime")
 @Validated
 data class DateTimeConfigRaw(
-  /** The field name of the start date of the event */
-  @get:Size(min = 1, max = 1, message = "Currently only support one date time field")
-  val fields: List<@NotBlank String>,
-  /** Is it a datetime or a date */
+  /** map each YouTrack issue to what kind of VEvent, support any type defined in [EventType]*/
   @get:NotNull
-  val fieldType: DateTimeFieldType,
-  /** if one date field + datetime type, the duration of the event, in minute, default to 10 minutes */
-  val defaultDatetimeDuration: Duration?,
+  val eventType: EventType,
+  /** name of the datetime related fields to be used to extract the needed datetime data */
+  @get:NotEmpty
+  val fieldNames: List<@NotBlank String>,
+  /**
+   * be used in all kinds of [EventType] except [EventType.ONE_DAY_EVENT]
+   * be used when the second field is not provided or blank value from the second field
+   */
+  val defaultDuration: Duration?,
+  /** any additional parameters for the chosen [eventType], currently unused */
+  val additionalParameters: Map<String, String> = emptyMap(),
   /** the zone id of all YouTrack issues, default to the zone id of the current bearer token */
-  val zoneId: ZoneId?,
+  @get:TimeZoneFormat
+  val zoneId: String?,
 )
 
 @Configuration
 class DateTimeConfigConfiguration {
 
   @Bean
-  fun dateTimeConfig(raw: DateTimeConfigRaw, usersApi: UsersApi): DateTimeConfig = DateTimeConfig(
-    eventType = when (raw.fieldType) {
-      DateTimeFieldType.DATE -> EventType.ONE_DAY_EVENT
-      DateTimeFieldType.DATETIME -> EventType.DURATION_DATE_TIME_EVENT
-    },
-    fields = OneEventField(raw.fields[0]),
-    defaultDuration = when (raw.fieldType) {
-      DateTimeFieldType.DATE -> null
-      DateTimeFieldType.DATETIME -> requireNotNull(raw.defaultDatetimeDuration) {
-        "defaultDatetimeDuration must be provided when fieldType is DATETIME"
-      }
-    },
-    zoneIdProvider = {
-      raw.zoneId ?: let {
-        log.info { "Determining the zone id of the current bearer token by calling the API" }
-        usersApi.getZoneIdOfUser()
-      }
-    }
-  )
+  fun dateTimeConfig(raw: DateTimeConfigRaw, usersApi: UsersApi): DateTimeConfig {
+    // TODO: more logic when supporting more event types
+    return DateTimeConfig(
+      eventType = raw.eventType,
+      fieldNames = OneFieldName(raw.fieldNames[0]),
+      defaultDuration = raw.defaultDuration,
+      zoneIdProvider = {
+        if (raw.zoneId.isNullOrBlank()) {
+          log.info { "Calling API to get the zone id of the current bearer token" }
+          usersApi.getZoneIdOfUser()
+        } else {
+          ZoneId.of(raw.zoneId)
+        }
+      },
+    )
+  }
 }
 
 class DateTimeConfig(
   val eventType: EventType,
-  val fields: EventDateTimeField,
+  val fieldNames: EventDateTimeFieldName,
   val defaultDuration: Duration? = null,
   zoneIdProvider: () -> ZoneId,
 ) {

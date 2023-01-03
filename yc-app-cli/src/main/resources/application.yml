@@ -8,10 +8,11 @@ cliapp:
     query:
     page-size: 40
   datetime:
-    fields:
-    field-type:
-    default-datetime-duration: 10m
-
+    event-type:
+    field-names:
+    default-duration:
+    additional-parameters:
+      dummy: dummy
 
 spring:
   main:

@@ -12,7 +12,7 @@ import mikufan.cx.yc.cliapp.util.EnabledByEnvExtension
 @SpringBootTestWithTestProfile(
   customProperties = [
     "cliapp.search.query=for: me State: Open,Reopened sort by: {Due Date} asc ",
-    "cliapp.datetime.fields=Due Date",
+    "cliapp.datetime.fields=created",
     "cliapp.datetime.field-type=date"
   ]
 )

@@ -13,6 +13,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-json")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.springframework.boot:spring-boot-starter-validation")
+  implementation("org.mnode.ical4j:ical4j")
 }
 
 application {

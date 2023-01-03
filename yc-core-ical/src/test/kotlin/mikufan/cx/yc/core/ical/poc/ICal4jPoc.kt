@@ -95,6 +95,7 @@ class ICal4jPoc : ShouldSpec({
   context("time") {
     println(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")))
     println(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Canada/Eastern")))
+    println(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Canada/Eastern")).toInstant().toEpochMilli() / 1000.0)
   }
   context("VCALENDAR") {
     val javaZoneId = ZoneId.of("Canada/Eastern")
@@ -104,15 +105,19 @@ class ICal4jPoc : ShouldSpec({
         add(javaZoneId.toICalTimeZone().vTimeZone)
         add(ProdId("Calendar1"))
       }.fluentTarget.withDefaults().fluentTarget
-      val event = VEvent( // create a new event
+      val event1 = VEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         "H1",
         "A 36 hours hackathon"
       ).apply {
-        add(Description("Description of the event"))
+        add(Description("Description of the event1"))
       }
-      calendar.add(event)
+      val event2 = VEvent(Instant.ofEpochMilli(1672628730081), Duration.ofHours(12), "A 12 hour event").apply {
+        add(Uid("H2"))
+        add(Description("Description of the event2"))
+      }
+      calendar.add(event1).add(event2)
       calendar.validate().entries.forEach {
         println("error = $it")
       }
