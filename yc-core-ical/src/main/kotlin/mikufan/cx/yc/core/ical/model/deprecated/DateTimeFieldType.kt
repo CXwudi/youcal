@@ -1,4 +1,4 @@
-package mikufan.cx.yc.core.ical.model
+package mikufan.cx.yc.core.ical.model.deprecated
 
 @Deprecated("seems unneeded")
 enum class DateTimeFieldType {

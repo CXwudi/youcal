@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
 import mikufan.cx.yc.cliapp.config.DateTimeConfig
 import mikufan.cx.yc.cliapp.config.SearchConfig
-import mikufan.cx.yc.core.ical.model.OneFieldName
 import mikufan.cx.yc.core.ical.util.YouTrackDefaultDateTime
 import org.springframework.stereotype.Component
 
@@ -36,23 +35,16 @@ class IssuesGetter(
   }
 
   internal fun getFields(dateTimeConfig: DateTimeConfig): Pair<List<String>, List<String>> {
-    val dateTimeFieldNames = dateTimeConfig.fieldNames
     val youtrackFieldNames = mutableListOf<String>()
     val customFieldNames = mutableListOf<String>()
-    when (dateTimeFieldNames) {
-      is OneFieldName -> {
-        val name = dateTimeFieldNames.fieldName
-        if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(name)) {
-          youtrackFieldNames.add(name)
-        } else {
-          customFieldNames.add(name)
-        }
-      }
-
-      else -> {
-        TODO("not implemented")
+    dateTimeConfig.fieldNames.forEach { name ->
+      if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(name)) {
+        youtrackFieldNames.add(name)
+      } else {
+        customFieldNames.add(name)
       }
     }
+
     return youtrackFieldNames to customFieldNames
   }
 }

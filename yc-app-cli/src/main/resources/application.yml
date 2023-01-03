@@ -13,6 +13,7 @@ cliapp:
     default-duration:
     additional-parameters:
       dummy: dummy
+    zone-id:
 
 spring:
   main:

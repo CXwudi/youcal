@@ -6,9 +6,7 @@ import jakarta.validation.constraints.NotNull
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.apiclient.yt.api.users.UsersApi
 import mikufan.cx.yc.cliapp.config.validation.TimeZoneFormat
-import mikufan.cx.yc.core.ical.model.EventDateTimeFieldName
 import mikufan.cx.yc.core.ical.model.EventType
-import mikufan.cx.yc.core.ical.model.OneFieldName
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -34,12 +32,12 @@ data class DateTimeConfigRaw(
    * be used in all kinds of [EventType] except [EventType.ONE_DAY_EVENT]
    * be used when the second field is not provided or blank value from the second field
    */
-  val defaultDuration: Duration?,
+  val defaultDuration: Duration = Duration.ofMinutes(10),
   /** any additional parameters for the chosen [eventType], currently unused */
   val additionalParameters: Map<String, String> = emptyMap(),
   /** the zone id of all YouTrack issues, default to the zone id of the current bearer token */
   @get:TimeZoneFormat
-  val zoneId: String?,
+  val zoneId: String = "",
 )
 
 @Configuration
@@ -50,10 +48,10 @@ class DateTimeConfigConfiguration {
     // TODO: more logic when supporting more event types
     return DateTimeConfig(
       eventType = raw.eventType,
-      fieldNames = OneFieldName(raw.fieldNames[0]),
+      fieldNames = raw.fieldNames,
       defaultDuration = raw.defaultDuration,
       zoneIdProvider = {
-        if (raw.zoneId.isNullOrBlank()) {
+        if (raw.zoneId.isBlank()) {
           log.info { "Calling API to get the zone id of the current bearer token" }
           usersApi.getZoneIdOfUser()
         } else {
@@ -66,8 +64,8 @@ class DateTimeConfigConfiguration {
 
 class DateTimeConfig(
   val eventType: EventType,
-  val fieldNames: EventDateTimeFieldName,
-  val defaultDuration: Duration? = null,
+  val fieldNames: List<String>,
+  val defaultDuration: Duration,
   zoneIdProvider: () -> ZoneId,
 ) {
   val zoneId: ZoneId by lazy(zoneIdProvider)

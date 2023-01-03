@@ -9,33 +9,32 @@ import java.time.Duration
  */
 
 sealed interface ToBeMappedYouTrackIssueInfo {
+  val eventType: EventType
   val json: ObjectNode
 
   /**
-   *  alarm can be disabled, non-null means it is enabled and the program should make sure it is a valid setting
+   *  alarm can be disabled, non-null means it is enabled.
    */
   val alarmSetting: AlarmSetting?
-  val otherMappings: List<OtherStringMapping>
+  val otherMappings: OtherStringMappings
 }
 
 data class OneDayIssueInfo(
   override val json: ObjectNode,
   val fieldName: String,
   override val alarmSetting: AlarmSetting?,
-  override val otherMappings: List<OtherStringMapping>,
-) : ToBeMappedYouTrackIssueInfo
+  override val otherMappings: OtherStringMappings,
+) : ToBeMappedYouTrackIssueInfo {
+  override val eventType: EventType = EventType.ONE_DAY_EVENT
+}
 
 data class DurationDatetimeIssueInfo(
   override val json: ObjectNode,
   val startFieldName: String,
   val durationFieldName: String?,
-  val defaultDuration: Duration?,
+  val defaultDuration: Duration,
   override val alarmSetting: AlarmSetting?,
-  override val otherMappings: List<OtherStringMapping>,
+  override val otherMappings: OtherStringMappings,
 ) : ToBeMappedYouTrackIssueInfo {
-  init {
-    require(durationFieldName != null || defaultDuration != null) {
-      "Either durationFieldName or defaulrDuration must be non-null"
-    }
-  }
+  override val eventType: EventType = EventType.DURATION_DATETIME_EVENT
 }

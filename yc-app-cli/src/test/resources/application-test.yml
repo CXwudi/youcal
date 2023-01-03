@@ -10,7 +10,7 @@ cliapp:
   datetime:
     event-type: ONE_DAY_EVENT
     field-names: "created"
-    default-duration: 10m
+    default-duration:
     additional-parameters:
     zone-id:
 
