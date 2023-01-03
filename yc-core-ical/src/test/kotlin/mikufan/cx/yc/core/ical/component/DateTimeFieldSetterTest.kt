@@ -8,6 +8,7 @@ import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 import mikufan.cx.yc.core.ical.util.loadResourceAsString
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.property.DtStart
+import java.time.ZoneId
 
 class DateTimeFieldSetterTest : ShouldSpec({
 
@@ -19,7 +20,11 @@ class DateTimeFieldSetterTest : ShouldSpec({
       should("works on ${issue["idReadable"].asText()}") {
         try {
           val vEvent = VEvent()
-          dateTimeFieldSetter.doMapAndSet(vEvent, issue, OneDayIssueDateTimeFieldInfo("Due Date"))
+          dateTimeFieldSetter.doMapAndSet(
+            vEvent,
+            issue,
+            OneDayIssueDateTimeFieldInfo("Due Date", ZoneId.of("Canada/Eastern"))
+          )
           println(vEvent)
           vEvent.propertyList.all.any { it is DtStart<*> }
         } catch (e: MappingException) {

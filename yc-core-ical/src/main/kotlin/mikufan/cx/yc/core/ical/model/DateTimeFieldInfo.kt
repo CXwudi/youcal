@@ -1,6 +1,8 @@
 package mikufan.cx.yc.core.ical.model
 
 import java.time.Duration
+import java.time.LocalDate
+import java.time.ZoneId
 
 /**
  * @author CX无敌
@@ -10,6 +12,10 @@ sealed interface DateTimeFieldInfo
 
 data class OneDayIssueDateTimeFieldInfo(
   val fieldName: String,
+  /**
+   * used by converting the YouTrack Instant time to [LocalDate]
+   */
+  val zoneId: ZoneId,
 ) : DateTimeFieldInfo
 
 data class DurationDateTimeIssueDateTimeFieldInfo(

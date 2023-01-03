@@ -13,6 +13,10 @@ import net.fortuna.ical4j.model.property.DtStart
 import java.time.Instant
 
 /**
+ * Map the date time field value into the [VEvent]'s start end date time field.
+ *
+ * Based on the type of [DateTimeFieldInfo], it will map to different [VEvent]'s fields.
+ *
  * @author CX无敌
  * 2023-01-03
  */
@@ -31,8 +35,8 @@ class DateTimeFieldSetter {
   ) {
     val fieldName = dateTimeFieldInfo.fieldName
     val startDateStr = extractDateFieldValue(fieldName, issueJson)
-    val startDate = Instant.ofEpochMilli(startDateStr.toLong())
-    // TODO need to convert to local Date
+    val startDateInstant = Instant.ofEpochMilli(startDateStr.toLong())
+    val startDate = startDateInstant.atZone(dateTimeFieldInfo.zoneId).toLocalDate()
     vEvent.add(DtStart(startDate))
   }
 
