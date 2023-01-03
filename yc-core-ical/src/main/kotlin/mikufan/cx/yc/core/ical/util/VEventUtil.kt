@@ -36,7 +36,7 @@ fun VEvent(
 ): VEvent = VEvent().apply {
   setDtStartWithZoneId(startZonedDateTime)
   setDtEndWithZoneId(endZonedDateTime)
-  addMoreProperties(id, summary, description)
+  addCommonProperties(id, summary, description)
 }
 
 fun VEvent(
@@ -48,10 +48,10 @@ fun VEvent(
 ): VEvent = VEvent().apply {
   setDtStartWithZoneId(startZonedDateTime)
   add(Duration(duration))
-  addMoreProperties(id, summary, description)
+  addCommonProperties(id, summary, description)
 }
 
-private fun VEvent.addMoreProperties(
+fun VEvent.addCommonProperties(
   id: String?,
   summary: String?,
   description: String?,

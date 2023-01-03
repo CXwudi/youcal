@@ -9,7 +9,7 @@ import java.time.ZonedDateTime
  * @author CX无敌
  * 2023-01-01
  */
-
+@Deprecated("seems unneeded")
 sealed interface EventDateTime
 
 class OneDayEventDate(

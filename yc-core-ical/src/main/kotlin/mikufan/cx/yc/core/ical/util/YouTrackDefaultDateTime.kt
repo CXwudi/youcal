@@ -1,4 +1,4 @@
-package mikufan.cx.yc.core.ical.model
+package mikufan.cx.yc.core.ical.util
 
 /**
  * @author CX无敌

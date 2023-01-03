@@ -5,7 +5,7 @@ import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
 import mikufan.cx.yc.cliapp.config.DateTimeConfig
 import mikufan.cx.yc.cliapp.config.SearchConfig
 import mikufan.cx.yc.core.ical.model.OneFieldName
-import mikufan.cx.yc.core.ical.model.YouTrackDefaultDateTime
+import mikufan.cx.yc.core.ical.util.YouTrackDefaultDateTime
 import org.springframework.stereotype.Component
 
 /**
