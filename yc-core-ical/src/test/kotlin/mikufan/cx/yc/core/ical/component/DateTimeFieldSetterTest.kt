@@ -1,6 +1,7 @@
 package mikufan.cx.yc.core.ical.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.kotest.assertions.failure
 import io.kotest.core.spec.style.ShouldSpec
 import mikufan.cx.yc.core.ical.model.OneDayIssueDateTimeFieldInfo
 import mikufan.cx.yc.core.ical.model.exception.MappingException
@@ -29,6 +30,9 @@ class DateTimeFieldSetterTest : ShouldSpec({
           vEvent.propertyList.all.any { it is DtStart<*> }
         } catch (e: MappingException) {
           e.printStackTrace()
+        } catch (e: Exception) {
+          e.printStackTrace()
+          failure("unexpected exception", e)
         }
       }
     }
