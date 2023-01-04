@@ -40,7 +40,7 @@ class EventMapperIT : ShouldSpec({
     val dateFieldInfo = OneDayIssueDateTimeFieldInfo("Due Date", ZoneId.of("Canada/Eastern"))
     issues.forEach { json ->
       should("works on ${json["idReadable"].asText()}") {
-        val alarmSetting = AlarmSetting("Estimation", true, Duration.ofHours(2))
+        val alarmSetting = AlarmSetting("Estimation", true, Duration.ofHours(-3))
         val toBeMapped =
           OneDayIssueInfo(json as YouTrackIssueJson, dateFieldInfo, alarmSetting, OtherStringMappings(emptyList()))
         try {
