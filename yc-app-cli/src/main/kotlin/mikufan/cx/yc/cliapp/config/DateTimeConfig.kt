@@ -32,6 +32,7 @@ data class DateTimeConfigRaw(
    * be used in all kinds of [EventType] except [EventType.ONE_DAY_EVENT]
    * be used when the second field is not provided or blank value from the second field
    */
+  @get:NotNull
   val defaultDuration: Duration = Duration.ofMinutes(10),
   /** any additional parameters for the chosen [eventType], currently unused */
   val additionalParameters: Map<String, String> = emptyMap(),
@@ -45,7 +46,6 @@ class DateTimeConfigConfiguration {
 
   @Bean
   fun dateTimeConfig(raw: DateTimeConfigRaw, usersApi: UsersApi): DateTimeConfig {
-    // TODO: more logic when supporting more event types
     return DateTimeConfig(
       eventType = raw.eventType,
       fieldNames = raw.fieldNames,

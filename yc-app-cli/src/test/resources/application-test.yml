@@ -6,13 +6,25 @@ cliapp:
     bearer-token: Can be empty for this youtrack
   search:
     query: "project: {Toolbox App}"
-    page-size: 40
   datetime:
     event-type: ONE_DAY_EVENT
     field-names: "created"
-    default-duration:
-    additional-parameters:
-    zone-id:
+  alarm:
+    default-duration: -2h
+#  other-mapping:
+#    list:
+#      - from-field-name: Assignee
+#        default-value: Unassigned
+#        to-field-name: ATTENDEE
+#      - from-field-name: State
+#        default-value: Unresolved
+#        to-field-name: STATUS
+#      - from-field-name:
+#        default-value: OPAQUE
+#        to-field-name: TRANSP
+#      - from-field-name: Submodules
+#        default-value:
+#        to-field-name: CATEGORIES
 
 logging:
   level:

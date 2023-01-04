@@ -20,4 +20,5 @@ class IOConfig(
       outputFile.parent.createDirectories()
     }
   }
+  val outputFileName: String = outputFile.fileName.toString()
 }

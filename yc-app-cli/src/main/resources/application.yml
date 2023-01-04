@@ -1,3 +1,5 @@
+# value provided here is just to make app bootable
+# see all default values in corresponding classes
 cliapp:
   io:
     output-file:
@@ -14,6 +16,17 @@ cliapp:
     additional-parameters:
       dummy: dummy
     zone-id:
+  alarm:
+    enabled: true
+    period-field-name:
+    is-negative-period: true
+    default-duration:
+    shift-based-on:
+#  other-mapping:
+#    list:
+#      - from-field-name: Assignee
+#        default-value: Unassigned
+#        to-field-name: ATTENDEE
 
 spring:
   main:
