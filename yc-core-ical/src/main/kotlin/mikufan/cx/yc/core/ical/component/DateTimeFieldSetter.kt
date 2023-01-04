@@ -1,13 +1,12 @@
 package mikufan.cx.yc.core.ical.component
 
+import com.fasterxml.jackson.databind.JsonNode
+import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.core.ical.model.DateTimeFieldInfo
 import mikufan.cx.yc.core.ical.model.DurationDateTimeIssueDateTimeFieldInfo
 import mikufan.cx.yc.core.ical.model.OneDayIssueDateTimeFieldInfo
 import mikufan.cx.yc.core.ical.model.exception.MappingException
-import mikufan.cx.yc.core.ical.util.YouTrackDefaultDateTime
-import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
-import mikufan.cx.yc.core.ical.util.YouTrackType
-import mikufan.cx.yc.core.ical.util.getCustomField
+import mikufan.cx.yc.core.ical.util.*
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.property.DtStart
 import java.time.Instant
@@ -34,23 +33,26 @@ class DateTimeFieldSetter {
     dateTimeFieldInfo: OneDayIssueDateTimeFieldInfo,
   ) {
     val fieldName = dateTimeFieldInfo.fieldName
-    val startDateStr = extractDateFieldValue(fieldName, issueJson)
-    val startDateInstant = Instant.ofEpochMilli(startDateStr.toLong())
-    val startDate = startDateInstant.atZone(dateTimeFieldInfo.zoneId).toLocalDate()
-    vEvent.add(DtStart(startDate))
+    val startDateJsonNode = extractDateFieldValueJsonNode(fieldName, issueJson)
+    if (startDateJsonNode.isNull) {
+      log.warn { "Can not map ${issueJson.debugName} to VEvent due to missing proper start date" }
+      throw MappingException("Start date field $fieldName is null or blank, skipping the mapping of this issue")
+    } else {
+      val startDateInstant = Instant.ofEpochMilli(startDateJsonNode.asLong())
+      val startDate = startDateInstant.atZone(dateTimeFieldInfo.zoneId).toLocalDate()
+      vEvent.add(DtStart(startDate))
+    }
   }
 
-  private fun extractDateFieldValue(fieldName: String, issueJson: YouTrackIssueJson): String {
+  private fun extractDateFieldValueJsonNode(fieldName: String, issueJson: YouTrackIssueJson): JsonNode {
     val startDateStr = if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(fieldName)) {
-      issueJson[fieldName].asText()
+      issueJson[fieldName]
     } else {
       val customField = issueJson.getCustomField(fieldName, YouTrackType.DATE_ISSUE_CUSTOM_FIELD)
-      customField["value"].asText()
+      customField["value"]
     }
-    if (startDateStr.isNullOrBlank() || startDateStr == "null") {
-      throw MappingException("Date field $fieldName is null or blank, skipping the mapping of this issue")
-    } else {
-      return startDateStr
-    }
+    return startDateStr
   }
 }
+
+private val log = KInlineLogging.logger()
