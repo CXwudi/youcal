@@ -41,7 +41,7 @@ class AlarmMapperTest : ShouldSpec({
       }
     }
 
-    context("on specified duration field") {
+    context("on specified duration field with default duration") {
       issues.forEach { json ->
         json as ObjectNode
         should("works on ${json["idReadable"].asText()}") {
@@ -50,6 +50,24 @@ class AlarmMapperTest : ShouldSpec({
           alarm shouldNotBe null
           alarm!!.propertyList.all.apply {
             size shouldBe 3
+          }
+        }
+      }
+    }
+
+    context("on specified duration field only") {
+      issues.forEach { json ->
+        json as ObjectNode
+        should("works on ${json["idReadable"].asText()}") {
+          val alarm = alarmMapper.createAlarm(json, AlarmSetting("Estimation", true, null))
+          println(alarm)
+          if (json["idReadable"].asText() == "AL-10") {
+            alarm shouldBe null
+          } else {
+            alarm shouldNotBe null
+            alarm!!.propertyList.all.apply {
+              size shouldBe 3
+            }
           }
         }
       }

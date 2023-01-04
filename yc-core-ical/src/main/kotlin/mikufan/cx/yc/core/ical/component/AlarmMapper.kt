@@ -27,14 +27,13 @@ class AlarmMapper {
     }
 
     val (durationFieldName, isNegativeDurationField, defaultDuration, shiftBasedOn) = alarmSetting
-    log.info { "Creating VAlarm based on alarm setting for ${json.debugName}" }
-
-    val (duration, descStr) = getDurationAndDescription(
+    log.info { "Try creating VAlarm based on alarm setting for ${json.debugName}" }
+    val (duration, descStr) = tryGetDurationAndDescription(
       durationFieldName,
       json,
       isNegativeDurationField,
       defaultDuration
-    )
+    ) ?: return null
     val fullDescription = when (shiftBasedOn) {
       ShiftBasedOn.START -> "$descStr start date"
       ShiftBasedOn.END -> "$descStr end date"
@@ -52,26 +51,36 @@ class AlarmMapper {
     }
   }
 
-  private fun getDurationAndDescription(
-    durationFieldName: String?,
+  private fun tryGetDurationAndDescription(
+    durationFieldName: String,
     json: YouTrackIssueJson,
     isNegativeDurationField: Boolean,
-    defaultDuration: Duration,
-  ): Pair<Duration, String> {
+    defaultDuration: Duration?,
+  ): Pair<Duration, String>? {
     val descriptionFirstPart = "A Reminder for ${json["idReadable"].asText()}"
-    return if (!durationFieldName.isNullOrBlank()) {
+    return if (durationFieldName.isNotBlank()) {
       val durationFromField = tryGetDurationFrom(json, durationFieldName, isNegativeDurationField)
       if (durationFromField != null) {
-        log.debug { "Using duration from field $durationFieldName for ${json.debugName}" }
+        log.info { "Creating VAlarm using duration from field $durationFieldName for ${json.debugName}" }
         val descrptionLastPart =
           "with duration $durationFromField " + if (isNegativeDurationField) "before" else "after"
         durationFromField to "$descriptionFirstPart $descrptionLastPart"
-      } else {
+      } else if (defaultDuration != null) {
+        log.info { "Creating VAlarm using fallback default duration" }
         defaultDuration to "$descriptionFirstPart that fallbacks to default duration $defaultDuration related to"
+      } else {
+        log.info {
+          "No default duration set while missing duration value " +
+              "from field $durationFieldName for ${json.debugName}, skip setting the alarm"
+        }
+        return null
       }
+    } else if (defaultDuration != null) {
+      log.info { "Creating VAlarm using default duration" }
+      defaultDuration to "$descriptionFirstPart that fallbacks to default duration $defaultDuration related to"
     } else {
-      log.debug { "no duration field set for ${json.debugName}, using default duration directly" }
-      defaultDuration to "$descriptionFirstPart with default duration $defaultDuration related to"
+      log.warn { "This shouldn't happen, but we traded it as no alarm" }
+      return null
     }
   }
 
@@ -79,7 +88,6 @@ class AlarmMapper {
     val field = json.getCustomField(fieldName, YouTrackType.PERIOD_ISSUE_CUSTOM_FIELD)
     val valueJson = field["value"]
     if (valueJson.isNull) {
-      log.warn { "Field $fieldName contains null alarm, fallback to use default duration" }
       return null
     }
     val durationString = valueJson["id"].asText()

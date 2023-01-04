@@ -11,7 +11,7 @@ data class AlarmSetting(
    * the field name of the period field to be used to calculate the relative alarm time,
    * can be `null`
    */
-  val durationFieldName: String?,
+  val durationFieldName: String = "",
   /**
    * This is only needed for [durationFieldName], as in YouTrack you can't specify negative duration
    */
@@ -21,9 +21,15 @@ data class AlarmSetting(
    *
    * This field also makes sure an alarm is creatable.
    */
-  val defaultShiftDuration: Duration,
+  val defaultShiftDuration: Duration?,
   val shiftBasedOn: ShiftBasedOn = ShiftBasedOn.START,
-)
+) {
+  init {
+    require(!(durationFieldName.isBlank() && defaultShiftDuration == null)) {
+      "either durationFieldName or defaultShiftDuration must be specified"
+    }
+  }
+}
 
 enum class ShiftBasedOn {
   START, END
