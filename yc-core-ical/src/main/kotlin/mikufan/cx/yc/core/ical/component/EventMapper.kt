@@ -14,6 +14,7 @@ import net.fortuna.ical4j.model.component.VEvent
 class EventMapper(
   private val dateTimeFieldSetter: DateTimeFieldSetter,
   private val alarmMapper: AlarmMapper,
+  private val otherFieldsSetter: OtherFieldsSetter,
 ) {
 
   fun doMap(toBeMapped: ToBeMappedYouTrackIssueInfo): VEvent {
@@ -27,6 +28,8 @@ class EventMapper(
     alarmMapper.createAlarm(json, alarmSetting)?.let {
       vEvent.add(it)
     }
+    val otherMappings = toBeMapped.otherMappings
+    otherFieldsSetter.doMapAndSet(vEvent, json, otherMappings)
     log.info { "Done mapping ${json.debugName} to VEvent" }
     return vEvent
   }

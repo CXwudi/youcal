@@ -1,0 +1,255 @@
+[
+  {
+    "created": 1672628730081,
+    "description": "<https://github.com/CXwudi/youcal>",
+    "updated": 1672717022342,
+    "idReadable": "AL-39",
+    "summary": "Finish YouCal",
+    "resolved": null,
+    "reporter": {
+      "login": "admin",
+      "$type": "User"
+    },
+    "customFields": [
+      {
+        "value": {
+          "name": "Normal",
+          "id": "99-3",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Priority",
+        "id": "120-7",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "Task",
+          "id": "99-9",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Type",
+        "id": "120-8",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": null,
+        "name": "State",
+        "id": "120-9",
+        "$type": "StateIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "CXwudi",
+          "id": "1-1",
+          "$type": "User"
+        },
+        "name": "Assignee",
+        "id": "121-1",
+        "$type": "SingleUserIssueCustomField"
+      },
+      {
+        "value": [
+          {
+            "name": "Study",
+            "id": "99-14",
+            "$type": "EnumBundleElement"
+          }
+        ],
+        "name": "Submodule",
+        "id": "120-14",
+        "$type": "MultiEnumIssueCustomField"
+      },
+      {
+        "value": 1673179200000,
+        "name": "Due Date",
+        "id": "154-0",
+        "$type": "DateIssueCustomField"
+      },
+      {
+        "value": {
+          "id": "P1DT4H",
+          "$type": "PeriodValue"
+        },
+        "name": "Estimation",
+        "id": "127-2",
+        "$type": "PeriodIssueCustomField"
+      },
+      {
+        "value": null,
+        "name": "Spent time",
+        "id": "127-3",
+        "$type": "PeriodIssueCustomField"
+      }
+    ],
+    "id": "2-114",
+    "$type": "Issue"
+  },
+  {
+    "created": 1672724691802,
+    "description": "两个保险都要报",
+    "updated": 1672724702543,
+    "idReadable": "AL-40",
+    "summary": "Claim glasses fee ",
+    "resolved": null,
+    "reporter": {
+      "login": "admin",
+      "$type": "User"
+    },
+    "customFields": [
+      {
+        "value": {
+          "name": "Normal",
+          "id": "99-3",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Priority",
+        "id": "120-7",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "Task",
+          "id": "99-9",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Type",
+        "id": "120-8",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "Open",
+          "id": "101-1",
+          "$type": "StateBundleElement"
+        },
+        "name": "State",
+        "id": "120-9",
+        "$type": "StateIssueCustomField"
+      },
+      {
+        "value": null,
+        "name": "Assignee",
+        "id": "121-1",
+        "$type": "SingleUserIssueCustomField"
+      },
+      {
+        "value": [
+          {
+            "name": "Study",
+            "id": "99-14",
+            "$type": "EnumBundleElement"
+          }
+        ],
+        "name": "Submodule",
+        "id": "120-14",
+        "$type": "MultiEnumIssueCustomField"
+      },
+      {
+        "value": 1673179200000,
+        "name": "Due Date",
+        "id": "154-0",
+        "$type": "DateIssueCustomField"
+      },
+      {
+        "value": {
+          "id": "PT2H",
+          "$type": "PeriodValue"
+        },
+        "name": "Estimation",
+        "id": "127-2",
+        "$type": "PeriodIssueCustomField"
+      },
+      {
+        "value": null,
+        "name": "Spent time",
+        "id": "127-3",
+        "$type": "PeriodIssueCustomField"
+      }
+    ],
+    "id": "2-116",
+    "$type": "Issue"
+  },
+  {
+    "created": 1664593505332,
+    "description": "See <https://github.com/CXwudi/comp5903-project> and <https://github.com/CXwudi/comp5903-easy-cucumber>",
+    "updated": 1672628362326,
+    "idReadable": "AL-10",
+    "summary": "5903 Project",
+    "resolved": null,
+    "reporter": {
+      "login": "admin",
+      "$type": "User"
+    },
+    "customFields": [
+      {
+        "value": {
+          "name": "Normal",
+          "id": "99-3",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Priority",
+        "id": "120-7",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "Long Term",
+          "id": "99-16",
+          "$type": "EnumBundleElement"
+        },
+        "name": "Type",
+        "id": "120-8",
+        "$type": "SingleEnumIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "Open",
+          "id": "101-1",
+          "$type": "StateBundleElement"
+        },
+        "name": "State",
+        "id": "120-9",
+        "$type": "StateIssueCustomField"
+      },
+      {
+        "value": {
+          "name": "CXwudi",
+          "id": "1-1",
+          "$type": "User"
+        },
+        "name": "Assignee",
+        "id": "121-1",
+        "$type": "SingleUserIssueCustomField"
+      },
+      {
+        "value": [
+          {
+            "name": "Study",
+            "id": "99-14",
+            "$type": "EnumBundleElement"
+          }
+        ],
+        "name": "Submodule",
+        "id": "120-14",
+        "$type": "MultiEnumIssueCustomField"
+      },
+      {
+        "value": null,
+        "name": "Estimation",
+        "id": "127-2",
+        "$type": "PeriodIssueCustomField"
+      },
+      {
+        "value": {
+          "id": "P2DT7H30M",
+          "$type": "PeriodValue"
+        },
+        "name": "Spent time",
+        "id": "127-3",
+        "$type": "PeriodIssueCustomField"
+      }
+    ],
+    "id": "2-45",
+    "$type": "Issue"
+  }
+]

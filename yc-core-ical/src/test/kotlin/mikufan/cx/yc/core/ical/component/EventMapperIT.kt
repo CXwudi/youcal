@@ -15,7 +15,7 @@ import java.time.ZoneId
 
 class EventMapperIT : ShouldSpec({
 
-  val eventMapper = EventMapper(DateTimeFieldSetter(), AlarmMapper())
+  val eventMapper = EventMapper(DateTimeFieldSetter(), AlarmMapper(), OtherFieldsSetter())
   context("mapping of the YouTrack Issue Json to a whole day event without alarm") {
     val issues = ObjectMapper().readTree(loadResourceAsString("sample-json/with-prio-state-assignee-due-rsp.json"))
     val dateFieldInfo = OneDayIssueDateTimeFieldInfo("Due Date", ZoneId.of("Canada/Eastern"))

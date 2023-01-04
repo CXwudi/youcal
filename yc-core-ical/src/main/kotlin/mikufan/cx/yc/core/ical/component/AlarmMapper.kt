@@ -20,32 +20,37 @@ import java.time.Duration
  * 2023-01-03
  */
 class AlarmMapper {
-  fun createAlarm(json: YouTrackIssueJson, alarmSetting: AlarmSetting?): VAlarm? =
-    alarmSetting?.let { (durationFieldName, isNegativeDurationField, defaultDuration, shiftBasedOn) ->
-      log.info { "Creating VAlarm based on alarm setting for ${json.debugName}" }
+  fun createAlarm(json: YouTrackIssueJson, alarmSetting: AlarmSetting?): VAlarm? {
+    if (alarmSetting == null) {
+      log.info { "No alarm setting for ${json.debugName}, skipping alarm creation" }
+      return null
+    }
 
-      val (duration, descStr) = getDurationAndDescription(
-        durationFieldName,
-        json,
-        isNegativeDurationField,
-        defaultDuration
-      )
-      val fullDescription = when (shiftBasedOn) {
-        ShiftBasedOn.START -> "$descStr start date"
-        ShiftBasedOn.END -> "$descStr end date"
-      }
-      val trigger = Trigger(duration).apply {
-        if (shiftBasedOn == ShiftBasedOn.END) {
-          add<RelatedTo>(Related.END)
-        }
-      }
+    val (durationFieldName, isNegativeDurationField, defaultDuration, shiftBasedOn) = alarmSetting
+    log.info { "Creating VAlarm based on alarm setting for ${json.debugName}" }
 
-      VAlarm().apply {
-        add(Action(Action.VALUE_DISPLAY))
-        add(trigger)
-        add(Description(fullDescription))
+    val (duration, descStr) = getDurationAndDescription(
+      durationFieldName,
+      json,
+      isNegativeDurationField,
+      defaultDuration
+    )
+    val fullDescription = when (shiftBasedOn) {
+      ShiftBasedOn.START -> "$descStr start date"
+      ShiftBasedOn.END -> "$descStr end date"
+    }
+    val trigger = Trigger(duration).apply {
+      if (shiftBasedOn == ShiftBasedOn.END) {
+        add<RelatedTo>(Related.END)
       }
     }
+
+    return VAlarm().apply {
+      add(Action(Action.VALUE_DISPLAY))
+      add(trigger)
+      add(Description(fullDescription))
+    }
+  }
 
   private fun getDurationAndDescription(
     durationFieldName: String?,
