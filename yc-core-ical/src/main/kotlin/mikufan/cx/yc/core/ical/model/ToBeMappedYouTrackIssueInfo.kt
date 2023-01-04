@@ -1,6 +1,6 @@
 package mikufan.cx.yc.core.ical.model
 
-import com.fasterxml.jackson.databind.node.ObjectNode
+import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 
 /**
  * @author CX无敌
@@ -14,7 +14,7 @@ sealed interface ToBeMappedYouTrackIssueInfo {
    * doesn't really have any functionality
    */
   val eventType: EventType
-  val json: ObjectNode
+  val json: YouTrackIssueJson
   val dateTimeFieldInfo: DateTimeFieldInfo
 
   /**
@@ -25,7 +25,7 @@ sealed interface ToBeMappedYouTrackIssueInfo {
 }
 
 data class OneDayIssueInfo(
-  override val json: ObjectNode,
+  override val json: YouTrackIssueJson,
   override val dateTimeFieldInfo: OneDayIssueDateTimeFieldInfo,
   override val alarmSetting: AlarmSetting?,
   override val otherMappings: OtherStringMappings,
@@ -34,7 +34,7 @@ data class OneDayIssueInfo(
 }
 
 data class DurationDateTimeIssueInfo(
-  override val json: ObjectNode,
+  override val json: YouTrackIssueJson,
   override val dateTimeFieldInfo: DurationDateTimeIssueDateTimeFieldInfo,
   override val alarmSetting: AlarmSetting?,
   override val otherMappings: OtherStringMappings,

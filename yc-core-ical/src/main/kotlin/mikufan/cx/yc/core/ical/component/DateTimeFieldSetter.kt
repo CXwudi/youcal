@@ -32,6 +32,7 @@ class DateTimeFieldSetter {
     issueJson: YouTrackIssueJson,
     dateTimeFieldInfo: OneDayIssueDateTimeFieldInfo,
   ) {
+    log.info { "Mapping to one day VEvent for ${issueJson.debugName}" }
     val fieldName = dateTimeFieldInfo.fieldName
     val startDateJsonNode = extractDateFieldValueJsonNode(fieldName, issueJson)
     if (startDateJsonNode.isNull) {

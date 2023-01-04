@@ -20,7 +20,7 @@ interface IssuesApi {
   fun getIssues(
     @RequestParam("query") query: String,
     @RequestParam("fields") fields: String,
-    @RequestParam("customFields") customFields: List<String>,
+    @RequestParam("customFields", required = false) customFields: List<String>,
     @RequestParam("\$skip") skip: Int,
     @RequestParam("\$top") top: Int,
   ): ArrayNode

@@ -1,10 +1,12 @@
 package mikufan.cx.yc.cliapp
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.cliapp.component.IssuesGetter
 import mikufan.cx.yc.cliapp.component.MainEventMapper
+import net.fortuna.ical4j.model.component.VEvent
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
@@ -31,10 +33,18 @@ class Main(
   override fun run(): Unit = runBlocking(Dispatchers.Default) {
     log.info { "Getting issues" }
     val issuesIterator = issuesGetter.issuesIterator()
-    issuesIterator.asSequence()
-      .firstOrNull().also { log.info { "First issue is $it" } }
-//      .map { async { eventMapper(it) } }
-//      .toList()
-//      .map { it.await() }
+    val vEventList: List<VEvent> = issuesIterator.asSequence()
+      .map { async { eventMapper(it) } }
+      .toList()
+      .map { it.await() }
+      .filter { result ->
+        if (result.isFailure) {
+          false
+        } else {
+          true
+        }
+      }
+      .map { result -> result.getOrThrow() }
+    log.info { vEventList }
   }
 }

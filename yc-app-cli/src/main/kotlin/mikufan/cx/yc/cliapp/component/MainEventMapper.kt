@@ -1,11 +1,9 @@
 package mikufan.cx.yc.cliapp.component
 
-import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.inlinelogging.KInlineLogging
-import mikufan.cx.yc.cliapp.config.AlarmConfig
-import mikufan.cx.yc.cliapp.config.DateTimeConfig
-import mikufan.cx.yc.core.ical.model.OtherStringMappings
+import mikufan.cx.yc.core.ical.component.EventMapper
 import mikufan.cx.yc.core.ical.model.exception.MappingException
+import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 import net.fortuna.ical4j.model.component.VEvent
 import org.springframework.stereotype.Service
 
@@ -15,17 +13,17 @@ import org.springframework.stereotype.Service
  */
 @Service
 class MainEventMapper(
-  private val dateTimeConfig: DateTimeConfig,
-  private val alarmConfig: AlarmConfig,
-  private val otherStringMappings: OtherStringMappings,
-) : (ObjectNode) -> Result<VEvent> {
+  private val eventMapper: EventMapper,
+  private val infoCreator: ToBeMappedYouTrackIssueInfoCreator,
+) : (YouTrackIssueJson) -> Result<VEvent> {
 
-  override fun invoke(task: ObjectNode): Result<VEvent> {
-    log.info { "Start mapping $task" }
-    try {
-      TODO()
+  override fun invoke(task: YouTrackIssueJson): Result<VEvent> {
+    return try {
+      val toBeMappedYouTrackIssueInfo = infoCreator.createInfo(task)
+      Result.success(eventMapper.doMap(toBeMappedYouTrackIssueInfo))
     } catch (e: MappingException) {
-      return Result.failure(e)
+      log.warn(e) { "Failed to map a YouTrack Issue to VEvent, skipping it" }
+      Result.failure(e)
     }
   }
 }

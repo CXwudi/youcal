@@ -1,10 +1,13 @@
 package mikufan.cx.yc.cliapp.component
 
-import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.yc.apiclient.yt.api.issues.IssuesApi
+import mikufan.cx.yc.cliapp.config.AlarmConfig
 import mikufan.cx.yc.cliapp.config.DateTimeConfig
+import mikufan.cx.yc.cliapp.config.EnabledAlarmConfig
 import mikufan.cx.yc.cliapp.config.SearchConfig
+import mikufan.cx.yc.core.ical.model.OtherStringMappings
 import mikufan.cx.yc.core.ical.util.YouTrackDefaultDateTime
+import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 import org.springframework.stereotype.Component
 
 /**
@@ -16,10 +19,12 @@ class IssuesGetter(
   private val issuesApi: IssuesApi,
   private val searchConfig: SearchConfig,
   private val dateTimeConfig: DateTimeConfig,
+  private val alarmConfig: AlarmConfig,
+  private val otherStringMappings: OtherStringMappings,
 ) {
 
-  fun issuesIterator(): Iterator<ObjectNode> {
-    val (youtrackFieldNames, customFieldNames) = getFields(dateTimeConfig)
+  fun issuesIterator(): Iterator<YouTrackIssueJson> {
+    val (youtrackFieldNames, customFieldNames) = getFields()
     return issuesApi.getIssuesLazily(
       query = searchConfig.query,
       fields = listOf(
@@ -34,7 +39,7 @@ class IssuesGetter(
     )
   }
 
-  internal fun getFields(dateTimeConfig: DateTimeConfig): Pair<List<String>, List<String>> {
+  internal fun getFields(): Pair<List<String>, List<String>> {
     val youtrackFieldNames = mutableListOf<String>()
     val customFieldNames = mutableListOf<String>()
     dateTimeConfig.fieldNames.forEach { name ->
@@ -44,7 +49,15 @@ class IssuesGetter(
         customFieldNames.add(name)
       }
     }
-
+    if (alarmConfig is EnabledAlarmConfig) {
+      val periodFieldName = alarmConfig.periodFieldName
+      if (periodFieldName.isNotBlank()) {
+        customFieldNames.add(periodFieldName)
+      }
+    }
+    otherStringMappings.list.forEach { (youtrackFieldName, _, _) ->
+      customFieldNames.add(youtrackFieldName)
+    }
     return youtrackFieldNames to customFieldNames
   }
 }
