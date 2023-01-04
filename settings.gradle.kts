@@ -17,6 +17,17 @@ dependencyResolutionManagement {
   // gradle/libs.versions.toml is automatically imported if exists
 }
 
+plugins {
+  id("com.gradle.enterprise") version ("3.12.1")
+}
+
+gradleEnterprise {
+  buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+  }
+}
+
 rootProject.name = "YouCal"
 
 rootDir.listFiles { file -> file.isDirectory && !file.isHidden && file.name.startsWith("yc") }?.forEach {
