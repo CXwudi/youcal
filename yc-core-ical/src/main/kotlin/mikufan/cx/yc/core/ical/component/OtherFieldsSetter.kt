@@ -1,6 +1,8 @@
 package mikufan.cx.yc.core.ical.component
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ArrayNode
+import com.fasterxml.jackson.databind.node.ObjectNode
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.core.ical.model.OtherStringMappings
 import mikufan.cx.yc.core.ical.model.StringMappableVEventField
@@ -22,7 +24,7 @@ class OtherFieldsSetter {
 
   private fun doMapAndSet(event: VEvent, json: YouTrackIssueJson, otherMapping: StringMapping) {
     val (fromYouTrackFieldName, defaultValue, toVEventField) = otherMapping
-    if (fromYouTrackFieldName.isNullOrBlank()) {
+    if (fromYouTrackFieldName.isBlank()) {
       tryMapDefaultValue(defaultValue, toVEventField, json, event, otherMapping)
     } else {
       val valueNode = tryGetFieldValueJsonNode(json, fromYouTrackFieldName)
@@ -47,13 +49,13 @@ class OtherFieldsSetter {
   }
 
   private fun tryMapDefaultValue(
-    defaultValue: String?,
+    defaultValue: String,
     toVEventField: StringMappableVEventField,
     json: YouTrackIssueJson,
     event: VEvent,
     otherMapping: StringMapping,
   ) {
-    if (!defaultValue.isNullOrBlank()) {
+    if (defaultValue.isNotBlank()) {
       log.debug { "mapped default value $defaultValue to ${toVEventField.name} for ${json.debugName}" }
       event.add(toVEventField.createProperty(defaultValue))
     } else {

@@ -15,13 +15,13 @@ data class OtherStringMappings(
 )
 
 data class StringMapping(
-  val fromYouTrackFieldName: String?,
-  val defaultValue: String?,
+  val fromYouTrackFieldName: String = "",
+  val defaultValue: String = "",
   val toVEventFieldName: StringMappableVEventField,
 ) {
   init {
-    require(fromYouTrackFieldName != null || defaultValue != null) {
-      "Either fromYouTrackFieldName or defaultValue must be non-null"
+    require(!(fromYouTrackFieldName.isBlank() && defaultValue.isBlank())) {
+      "Either fromYouTrackFieldName or defaultValue must be non-blank"
     }
   }
 }

@@ -20,7 +20,7 @@ class OtherFieldsSetterTest : ShouldSpec({
       listOf(
         StringMapping("State", "Unresolved", StringMappableVEventField.STATUS),
         StringMapping("Assignee", "Unassigned", StringMappableVEventField.ATTENDEE),
-        StringMapping(null, Transp.VALUE_OPAQUE, StringMappableVEventField.TRANSP),
+        StringMapping("", Transp.VALUE_OPAQUE, StringMappableVEventField.TRANSP),
         StringMapping("Submodule", "No module", StringMappableVEventField.CATEGORIES),
       )
     )
