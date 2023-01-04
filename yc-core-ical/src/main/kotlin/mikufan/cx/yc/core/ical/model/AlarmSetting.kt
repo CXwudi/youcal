@@ -15,18 +15,16 @@ data class AlarmSetting(
   /**
    * This is only needed for [durationFieldName], as in YouTrack you can't specify negative duration
    */
-  val shiftBasedOn: ShiftBasedOn = ShiftBasedOn.BEFORE_START,
+  val isNegativeDurationField: Boolean,
   /**
    * This can be either a positive or negative duration.
    *
    * This field also makes sure an alarm is creatable.
    */
   val defaultShiftDuration: Duration,
+  val shiftBasedOn: ShiftBasedOn = ShiftBasedOn.START,
 )
 
-enum class ShiftBasedOn(val isBefore: Boolean, val isBasedOnStart: Boolean) {
-  BEFORE_START(true, true),
-  AFTER_START(false, true),
-  BEFORE_END(true, false),
-  AFTER_END(false, false);
+enum class ShiftBasedOn {
+  START, END
 }

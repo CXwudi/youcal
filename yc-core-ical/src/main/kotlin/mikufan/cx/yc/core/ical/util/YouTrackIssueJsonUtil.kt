@@ -16,3 +16,6 @@ fun YouTrackIssueJson.getCustomField(fieldName: String, expectedType: String = "
   }
   return customField
 }
+
+val YouTrackIssueJson.debugName: String
+  get() = "Issue ${get("idReadable").asText()} ${get("summary").asText()}"

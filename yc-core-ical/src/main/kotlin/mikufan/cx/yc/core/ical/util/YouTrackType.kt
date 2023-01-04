@@ -6,4 +6,5 @@ package mikufan.cx.yc.core.ical.util
  */
 object YouTrackType {
   const val DATE_ISSUE_CUSTOM_FIELD = "DateIssueCustomField"
+  const val PERIOD_ISSUE_CUSTOM_FIELD = "PeriodIssueCustomField"
 }
