@@ -1,3 +1,5 @@
+import my.mixin.springboot.MySpringBootLoggingFramework
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
   id("my.kotlin-spring-app")
@@ -14,8 +16,18 @@ dependencies {
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
   implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation("org.mnode.ical4j:ical4j")
+  testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    exclude(
+      group = "com.vaadin.external.google",
+      module = "android-json"
+    )
+  }
 }
 
 application {
   mainClass.set("mikufan.cx.yc.cliapp.MainKt")
+}
+
+mySpringBootApp {
+  loggingFramework.set(MySpringBootLoggingFramework.LOGBACK)
 }
