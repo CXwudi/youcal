@@ -71,14 +71,14 @@ class AlarmMapper {
           "No default duration set while missing duration value " +
               "from field $durationFieldName for ${json.debugName}, skip setting the alarm"
         }
-        return null
+        null
       }
     } else if (defaultDuration != null) {
       log.info { "Creating VAlarm using default duration" }
       defaultDuration to "$descriptionFirstPart that fallbacks to default duration $defaultDuration related to"
     } else {
       log.warn { "This shouldn't happen, but we traded it as no alarm" }
-      return null
+      null
     }
   }
 
