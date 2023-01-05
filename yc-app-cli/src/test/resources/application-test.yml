@@ -10,7 +10,7 @@ cliapp:
     event-type: ONE_DAY_EVENT
     field-names: "created"
   alarm:
-    default-duration: -2h
+    default-duration: -20m
 #  other-mapping:
 #    list:
 #      - from-field-name: Assignee
