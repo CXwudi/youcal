@@ -8,7 +8,7 @@ This repo is also the remastered version of the original [youcal](https://github
 
 ## Current Progress
 
-- ✅ design
-- ✅ minimal development
+- [x] design  
+- [x] minimal development
 - [ ] documentation
 - [ ] further development 
