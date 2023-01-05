@@ -3,6 +3,7 @@ package mikufan.cx.yc.core.ical.util
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.property.ProdId
+import net.fortuna.ical4j.model.property.Version
 import java.time.ZoneId
 
 /**
@@ -27,6 +28,7 @@ fun Calendar.addCommonStuffs(
   vararg events: VEvent,
 ) {
   add(ProdId(prodId))
+  add(Version(Version.VALUE_2_0, Version.VALUE_2_0))
   zoneId?.let { add(it.toICalTimeZone().vTimeZone) }
   events.forEach { add(it) }
 }
