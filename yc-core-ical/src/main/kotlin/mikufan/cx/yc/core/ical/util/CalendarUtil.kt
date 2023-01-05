@@ -1,0 +1,32 @@
+package mikufan.cx.yc.core.ical.util
+
+import net.fortuna.ical4j.model.Calendar
+import net.fortuna.ical4j.model.component.VEvent
+import net.fortuna.ical4j.model.property.ProdId
+import java.time.ZoneId
+
+/**
+ * @author CX无敌
+ * 2023-01-04
+ */
+fun newCalendar(
+  prodId: String,
+  zoneId: ZoneId?,
+  vararg events: VEvent,
+) = Calendar().apply { addCommonStuffs(prodId, zoneId, *events) }
+
+fun newCalendar(
+  prodId: String,
+  zoneId: ZoneId?,
+  events: Collection<VEvent>,
+) = Calendar().apply { addCommonStuffs(prodId, zoneId, *events.toTypedArray()) }
+
+fun Calendar.addCommonStuffs(
+  prodId: String,
+  zoneId: ZoneId?,
+  vararg events: VEvent,
+) {
+  add(ProdId(prodId))
+  zoneId?.let { add(it.toICalTimeZone().vTimeZone) }
+  events.forEach { add(it) }
+}

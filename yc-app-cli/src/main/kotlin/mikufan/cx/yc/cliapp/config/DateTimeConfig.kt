@@ -68,7 +68,10 @@ class DateTimeConfig(
   val defaultDuration: Duration,
   zoneIdProvider: () -> ZoneId,
 ) {
-  val zoneId: ZoneId by lazy(zoneIdProvider)
+  private val zoneIdLazy = lazy(zoneIdProvider)
+  val zoneId: ZoneId by zoneIdLazy
+  val isZoneIdUsed: Boolean
+    get() = zoneIdLazy.isInitialized()
 }
 
 private val log = KInlineLogging.logger()
