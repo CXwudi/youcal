@@ -55,9 +55,12 @@ class IssuesGetter(
         customFieldNames.add(periodFieldName)
       }
     }
-    otherStringMappings.list.forEach { (youtrackFieldName, _, _) ->
-      customFieldNames.add(youtrackFieldName)
-    }
+    otherStringMappings.list
+      .map { (youtrackFieldName, _, _) -> youtrackFieldName }
+      .filter { it.isNotBlank() }
+      .forEach { fieldName ->
+        customFieldNames.add(fieldName)
+      }
     return youtrackFieldNames to customFieldNames
   }
 }

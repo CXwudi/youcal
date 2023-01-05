@@ -9,7 +9,8 @@ import mikufan.cx.yc.core.ical.model.StringMappableVEventField
 import mikufan.cx.yc.core.ical.model.StringMapping
 import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 import mikufan.cx.yc.core.ical.util.debugName
-import mikufan.cx.yc.core.ical.util.getCustomField
+import mikufan.cx.yc.core.ical.util.isNull
+import mikufan.cx.yc.core.ical.util.tryGetCustomField
 import net.fortuna.ical4j.model.component.VEvent
 
 /**
@@ -28,7 +29,9 @@ class OtherFieldsSetter {
       tryMapDefaultValue(defaultValue, toVEventField, json, event, otherMapping)
     } else {
       val valueNode = tryGetFieldValueJsonNode(json, fromYouTrackFieldName)
-      if (valueNode.isArray) {
+      if (valueNode.isNull()) {
+        tryMapDefaultValue(defaultValue, toVEventField, json, event, otherMapping)
+      } else if (valueNode.isArray) {
         if (valueNode.isEmpty) {
           tryMapDefaultValue(defaultValue, toVEventField, json, event, otherMapping)
         } else {
@@ -38,8 +41,6 @@ class OtherFieldsSetter {
           log.debug { "mapped array value $valueStr to ${toVEventField.name} for ${json.debugName}" }
           event.add(toVEventField.createProperty(valueStr))
         }
-      } else if (valueNode.isNull) {
-        tryMapDefaultValue(defaultValue, toVEventField, json, event, otherMapping)
       } else {
         val valueStr = valueNode["name"].asText()
         log.debug { "mapped value $valueStr to ${toVEventField.name} for ${json.debugName}" }
@@ -70,11 +71,16 @@ class OtherFieldsSetter {
    * @return JsonNode can be either an [ObjectNode] representing the value
    * or an [ArrayNode] where the caller should manually map it to a string
    */
-  private fun tryGetFieldValueJsonNode(json: YouTrackIssueJson, fieldName: String): JsonNode {
+  private fun tryGetFieldValueJsonNode(json: YouTrackIssueJson, fieldName: String): JsonNode? {
     val defaultField = json[fieldName]
     if (defaultField != null && !defaultField.isNull) return defaultField
-    val customField = json.getCustomField(fieldName)
-    return customField["value"]
+    val customField = json.tryGetCustomField(fieldName)
+    return if (customField == null) {
+      log.debug { "${json.debugName} doesn't have the field $fieldName, will try using default value" }
+      null
+    } else {
+      customField["value"]
+    }
   }
 }
 

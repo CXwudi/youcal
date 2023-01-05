@@ -8,13 +8,20 @@ import com.fasterxml.jackson.databind.node.ObjectNode
  */
 typealias YouTrackIssueJson = ObjectNode
 
-fun YouTrackIssueJson.getCustomField(fieldName: String, expectedType: String = ""): ObjectNode {
-  val customField: ObjectNode = get("customFields").find { it["name"].asText() == fieldName } as ObjectNode?
-    ?: throw IllegalArgumentException("Cannot find custom field $fieldName in $this")
-  if (expectedType.isNotBlank() && customField["\$type"].asText() != expectedType) {
+fun YouTrackIssueJson.tryGetCustomField(fieldName: String, expectedType: String = ""): ObjectNode? {
+  val customField = get("customFields").find { it["name"].asText() == fieldName } as ObjectNode?
+  if (expectedType.isNotBlank() && customField != null && customField["\$type"].asText() != expectedType) {
     throw IllegalArgumentException("Custom field $fieldName is not of type $expectedType")
   }
   return customField
+}
+
+fun YouTrackIssueJson.getCustomFieldOrThrow(
+  fieldName: String,
+  expectedType: String = "",
+  thrower: () -> Exception,
+): ObjectNode {
+  return tryGetCustomField(fieldName, expectedType) ?: throw thrower()
 }
 
 val YouTrackIssueJson.debugName: String

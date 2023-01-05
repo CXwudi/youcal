@@ -37,7 +37,8 @@ class EventMapper(
   private fun VEvent.addCommonPropertiesFrom(json: YouTrackIssueJson) {
     val idReadable = json["idReadable"].asText()
     val summary = "[$idReadable] ${json["summary"].asText()}"
-    val description = json["description"].asText()
+    val descriptionNode = json["description"]
+    val description = if (descriptionNode.isNull) null else descriptionNode.asText()
     addCommonProperties(idReadable, summary, description)
   }
 }

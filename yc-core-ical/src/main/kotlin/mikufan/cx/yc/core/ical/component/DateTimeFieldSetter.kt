@@ -46,13 +46,16 @@ class DateTimeFieldSetter {
   }
 
   private fun extractDateFieldValueJsonNode(fieldName: String, issueJson: YouTrackIssueJson): JsonNode {
-    val startDateStr = if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(fieldName)) {
+    val startDateJsonNode = if (YouTrackDefaultDateTime.isYouTrackDefaultDateTimeField(fieldName)) {
       issueJson[fieldName]
     } else {
-      val customField = issueJson.getCustomField(fieldName, YouTrackType.DATE_ISSUE_CUSTOM_FIELD)
+      val customField = issueJson.getCustomFieldOrThrow(fieldName, YouTrackType.DATE_ISSUE_CUSTOM_FIELD) {
+        log.warn { "Can not map ${issueJson.debugName} to VEvent due to missing the start date field" }
+        MappingException("Start date field $fieldName is missing, skipping the mapping of ${issueJson.debugName}")
+      }
       customField["value"]
     }
-    return startDateStr
+    return startDateJsonNode
   }
 }
 

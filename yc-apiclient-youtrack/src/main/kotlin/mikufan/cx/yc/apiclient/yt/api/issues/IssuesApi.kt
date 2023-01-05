@@ -20,15 +20,7 @@ interface IssuesApi {
   fun getIssues(
     @RequestParam("query") query: String,
     @RequestParam("fields") fields: String,
-    @RequestParam("customFields", required = false) customFields: List<String>,
-    @RequestParam("\$skip") skip: Int,
-    @RequestParam("\$top") top: Int,
-  ): ArrayNode
-
-  @GetExchange
-  fun getIssues(
-    @RequestParam("query") query: String,
-    @RequestParam("fields") fields: String,
+    @RequestParam("customFields", required = false) customFields: List<String>?,
     @RequestParam("\$skip") skip: Int,
     @RequestParam("\$top") top: Int,
   ): ArrayNode
@@ -65,7 +57,7 @@ interface IssuesApi {
       if (stillHasMore) {
         log.debug { "reading issue list `$query` starting from $skip of amount $pageSize" }
         val partialList = if (customFields.isEmpty()) {
-          getIssues(query, fields.joinToString(","), skip, pageSize)
+          getIssues(query, fields.joinToString(","), null, skip, pageSize)
         } else {
           getIssues(query, fields.joinToString(","), customFields, skip, pageSize)
         }

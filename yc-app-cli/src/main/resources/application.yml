@@ -6,6 +6,9 @@ cliapp:
   auth:
     base-uri:
     bearer-token:
+  webclient:
+    debug: false
+    user-agent:
   search:
     query:
     page-size: 40

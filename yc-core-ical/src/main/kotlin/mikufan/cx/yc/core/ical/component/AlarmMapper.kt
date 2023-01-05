@@ -1,12 +1,10 @@
 package mikufan.cx.yc.core.ical.component
 
+import com.fasterxml.jackson.databind.JsonNode
 import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.core.ical.model.AlarmSetting
 import mikufan.cx.yc.core.ical.model.ShiftBasedOn
-import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
-import mikufan.cx.yc.core.ical.util.YouTrackType
-import mikufan.cx.yc.core.ical.util.debugName
-import mikufan.cx.yc.core.ical.util.getCustomField
+import mikufan.cx.yc.core.ical.util.*
 import net.fortuna.ical4j.model.component.VAlarm
 import net.fortuna.ical4j.model.parameter.Related
 import net.fortuna.ical4j.model.property.Action
@@ -85,9 +83,14 @@ class AlarmMapper {
   }
 
   private fun tryGetDurationFrom(json: YouTrackIssueJson, fieldName: String, isNegative: Boolean): Duration? {
-    val field = json.getCustomField(fieldName, YouTrackType.PERIOD_ISSUE_CUSTOM_FIELD)
-    val valueJson = field["value"]
-    if (valueJson.isNull) {
+    val field = json.tryGetCustomField(fieldName, YouTrackType.PERIOD_ISSUE_CUSTOM_FIELD)
+    if (field.isNull()) {
+      log.debug { "${json.debugName} doesn't have the custom field $fieldName for creating alarm" }
+      return null
+    }
+    val valueJson = field["value"] as JsonNode?
+    if (valueJson.isNull()) {
+      log.debug { "${json.debugName} have empty or null value in the custom field $fieldName for creating alarm" }
       return null
     }
     val durationString = valueJson["id"].asText()
