@@ -56,4 +56,4 @@ jobs:
       - name: Check with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build check --scan
+          arguments: check --scan
