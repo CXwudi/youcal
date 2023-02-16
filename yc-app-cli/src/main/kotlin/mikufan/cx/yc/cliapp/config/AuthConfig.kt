@@ -17,10 +17,10 @@ import java.net.URI
 @Validated
 data class AuthConfigRaw(
   /** the base url with the base uri path of the youtrack instance */
-  @get:URL
+  @field:URL
   val baseUri: String,
   /** the bearerToken to log in to the youtrack instance */
-  @get:NotBlank
+  @field:NotBlank
   val bearerToken: String,
 )
 
@@ -30,6 +30,6 @@ class AuthConfigConfiguration {
   @Bean
   fun authConfig(raw: AuthConfigRaw): YouTrackApiAuthInfo = YouTrackApiAuthInfo(
     baseURI = URI(raw.baseUri),
-    bearerToken = raw.bearerToken
+    bearerToken = raw.bearerToken,
   )
 }
