@@ -23,6 +23,7 @@ build/
 *.iws
 *.iml
 *.ipr
+.fleet
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,6 +34,8 @@ build/
 
 ### VS Code ###
 .vscode/
+**/bin/
+.dccache
 
 ### Test Stuff ###
 *.ics
