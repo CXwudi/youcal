@@ -30,7 +30,7 @@ class AlarmMapper {
       durationFieldName,
       json,
       isNegativeDurationField,
-      defaultDuration
+      defaultDuration,
     ) ?: return null
     val fullDescription = when (shiftBasedOn) {
       ShiftBasedOn.START -> "$descStr start date"
