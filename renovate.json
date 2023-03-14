@@ -4,27 +4,15 @@
     "config:base",
     ":automergeMinor",
     ":prHourlyLimitNone",
-    ":automergePr",
+    ":automergeBranch",
     "schedule:weekly"
   ],
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
-    "automergeType": "pr",
+    "automergeType": "branch",
     "platformAutomerge": true
   },
-  "packageRules": [
-    {
-      "groupName": "Group all patch dependencies",
-      "groupSlug": "all-patch",
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ]
-    }
-  ],
   "commitMessageAction": "⬆ upgrade",
   "timezone": "America/Toronto"
 }
