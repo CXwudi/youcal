@@ -8,10 +8,12 @@ import java.time.ZonedDateTime
 
 fun VEvent.setDtStartWithZoneId(zonedDateTime: ZonedDateTime) {
   setDtStartWithZoneId(zonedDateTime.toLocalDateTime(), zonedDateTime.zone)
+//  add(DtStart(zonedDateTime))
 }
 
 fun VEvent.setDtEndWithZoneId(zonedDateTime: ZonedDateTime) {
   setDtEndWithZoneId(zonedDateTime.toLocalDateTime(), zonedDateTime.zone)
+//  add(DtEnd(zonedDateTime))
 }
 
 fun VEvent.setDtStartWithZoneId(localDateTime: LocalDateTime, zoneId: ZoneId) {

@@ -54,7 +54,7 @@ class ICal4jPoc : ShouldSpec({
         val event = VEvent(
           LocalDate.of(2022, 5, 1),
           LocalDate.of(2022, 5, 4),
-          "A 3 day event"
+          "A 3 day event",
         ).apply {
           add(Description("Description of the event"))
         }
@@ -71,7 +71,7 @@ class ICal4jPoc : ShouldSpec({
       should("create an one day event") {
         val event = VEvent(
           LocalDate.of(2022, 5, 1),
-          "An one day event"
+          "An one day event",
         ).apply {
           add(Description("Description of the event"))
         }
@@ -86,7 +86,7 @@ class ICal4jPoc : ShouldSpec({
         val event = createVEvent(
           ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           Duration.ofHours(36),
-          summary = "A 36 hours hackathon"
+          summary = "A 36 hours hackathon",
         ).apply {
           add(Description("Description of the event"))
         }
@@ -97,7 +97,7 @@ class ICal4jPoc : ShouldSpec({
         val event = createVEvent( // create a new event
           ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
-          summary = "A 36 hours hackathon"
+          summary = "A 36 hours hackathon",
         ).apply {
           add(Description("Description of the event"))
         }
@@ -110,7 +110,7 @@ class ICal4jPoc : ShouldSpec({
           add(
             DtStart(Instant.ofEpochSecond(1671147000)).apply {
               add<TzId>(net.fortuna.ical4j.model.parameter.TzId("Asia/Shanghai"))
-            }
+            },
           )
           add(Duration(Duration.ofHours(36)))
           add(Summary("A 36 hours hackathon"))
@@ -124,6 +124,12 @@ class ICal4jPoc : ShouldSpec({
     println(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Canada/Eastern")))
     println(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Canada/Eastern")).toInstant().toEpochMilli() / 1000.0)
   }
+  context("dtstart") {
+    should("create a dtstart with timezone") {
+      val dtStart = DtStart(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")))
+      println("dtStart = $dtStart")
+    }
+  }
   context("VALARM") {
     should("add an alarm") {
       val alarm = VAlarm().apply {
@@ -136,7 +142,7 @@ class ICal4jPoc : ShouldSpec({
       val event = createVEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
-        summary = "A 36 hours hackathon"
+        summary = "A 36 hours hackathon",
       ).apply {
         add(Description("Description of the event"))
         add(alarm)
@@ -161,7 +167,7 @@ class ICal4jPoc : ShouldSpec({
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
         "H1",
-        "A 36 hours hackathon"
+        "A 36 hours hackathon",
       ).apply {
         add(Description("Description of the event1"))
         add(alarm)
