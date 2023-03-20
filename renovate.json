@@ -5,12 +5,11 @@
     ":automergeMinor",
     ":prHourlyLimitNone",
     ":automergeBranch",
-    "schedule:weekly"
+    "schedule:monthly"
   ],
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
-    "automergeType": "branch",
     "platformAutomerge": true
   },
   "commitMessageAction": "⬆ upgrade",
