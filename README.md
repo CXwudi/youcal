@@ -20,7 +20,7 @@ own repo
 
 Click on each module for more information:
 
-Application module:
+Application modules:
 
 - [yc-app-cli](yc-app-cli/README.md): The CLI application to export YouTrack Issue Due to .ics file.
 
