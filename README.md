@@ -38,9 +38,8 @@ Library modules:
 - [x] minimal development
 - [x] documentation (only for the CLI app)
 - [ ] further development
-    - So far, this app only supports mapping an YouTrack issue with one date-time/date field into a one-day event in
-      ical
-      ([`VEvent`](https://icalendar.org/iCalendar-RFC-5545/3-6-1-event-component.html) with a `DATE` value type
-      of `DTSTART` property, and no `DTEND` or `DURATION` property).
-      However, a new design at #7 has been proposed to support more complex mapping,
+    - So far, this app only supports mapping an YouTrack issue with one date-time/date field into a one-day
+      event ([`VEvent`](https://icalendar.org/iCalendar-RFC-5545/3-6-1-event-component.html) with a `DATE` value type
+      of `DTSTART` property, and no `DTEND` or `DURATION` property) in icalendar.
+      However, a new design at [#7](https://github.com/CXwudi/youcal/issues/7) has been proposed to support more complex mapping,
       and if more people are interested in this project, I will implement it.
