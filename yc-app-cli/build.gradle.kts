@@ -18,8 +18,8 @@ dependencies {
   implementation("org.mnode.ical4j:ical4j")
   testImplementation("org.springframework.boot:spring-boot-starter-test") {
     exclude(
-      group = "com.vaadin.external.google",
-      module = "android-json"
+            group = "com.vaadin.external.google",
+            module = "android-json",
     )
   }
 }
