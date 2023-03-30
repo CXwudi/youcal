@@ -27,22 +27,32 @@ Importing additional properties/YAML file, Passing command line, etc.
 All configuration properties are prefixed with `cliapp.` and can be found
 in [`application.yml`](src/main/resources/application.yml).
 
-Unfortunately, I couldn't make the auto-generated configuration properties metadata work,
+Unfortunately, I couldn't make the auto-generated configuration properties metadata work ☹,
 so there is no documentation on `application.yml`.
 Instead, documentation is written on `@ConfigurationProperties` classes, see you would need to look at source codes
-in [`mikufan.cx.yc.cliapp.config` package](src/main/kotlin/mikufan/cx/yc/cliapp/config) to check the documentation.
+in [`mikufan.cx.yc.cliapp.config` package](src/main/kotlin/mikufan/cx/yc/cliapp/config) to check the documentation 😔.
 
-A sample integration test showing one possible usage of most of the configuration properties can be found
-at [`Acceptance1Test`](src/test/kotlin/mikufan/cx/yc/cliapp/MainAcceptanceTest.kt)
+You can also check [`Acceptance1Test`](src/test/kotlin/mikufan/cx/yc/cliapp/MainAcceptanceTest.kt) for a sample usage.
 
 ## Advanced Usage with Cron + Nginx in Docker
 
-It is possible that you can integrate this CLI app with Nginx in Docker to distribute the output .ics file publicly.
+It is possible that you can let Cron runs this CLI app to keep up-to-date with YouTrack,
+and use Nginx in Docker to distribute the output .ics file publicly.
+
+### Cron setup
 
 First, build this application.
 
-Then you can set up a CRON job to run the CLI app periodically,
-and configure the output directory to be the mounted directory that your nginx docker container will use.
+Then write a YAML file with all your preconfigured settings. You can just copy the `application.yml` file and modify it.
+
+Then set up a CRON job to run the CLI app periodically.
+Use [`spring.config.import`](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.importing)
+command line argument to import your YAML file.
+
+### Nginx setup (using Docker)
+
+set the output file of this CLI app `cliapp.io.output-file` to some directory
+that will be mounted into your nginx docker container.
 
 This is a sample `docker-compose.yml` file that you can use to launch nginx with file listing enabled:
 
@@ -82,7 +92,6 @@ server {
         autoindex on;
     }
 }
-
 
 # HTTP redirect
 server {
