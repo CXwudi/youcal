@@ -34,3 +34,61 @@ in [`mikufan.cx.yc.cliapp.config` package](src/main/kotlin/mikufan/cx/yc/cliapp/
 
 A sample integration test showing one possible usage of most of the configuration properties can be found
 at [`Acceptance1Test`](src/test/kotlin/mikufan/cx/yc/cliapp/MainAcceptanceTest.kt)
+
+## Advanced Usage with Cron + Nginx in Docker
+
+It is possible that you can integrate this CLI app with Nginx in Docker to distribute the output .ics file publicly.
+
+First, build this application.
+
+Then you can set up a CRON job to run the CLI app periodically,
+and configure the output directory to be the mounted directory that your nginx docker container will use.
+
+This is a sample `docker-compose.yml` file that you can use to launch nginx with file listing enabled:
+
+``` yaml
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - <dir with .ics file>:/public/files/
+      - <dir with nginx config>:/etc/nginx/conf.d/
+      - <dir with ssl cert>:/etc/ssl/
+```
+
+The `nginx.conf` file should look like this in the directory you mount to `/etc/nginx/conf.d/`:
+
+``` properties
+server {
+    listen              443 ssl http2;
+    listen              [::]:443 ssl http2;
+    server_name         my.domain;
+
+    # SSL
+    ssl_certificate     /etc/ssl/my_ssl_certificate.crt;
+    ssl_certificate_key /etc/ssl/my_ssl_certificate.key;
+
+    # file listing
+    root /public/files/;
+
+    # to access the file at https://my.domain/sub/my-todo.ics
+    location /sub/ {
+        autoindex on;
+    }
+}
+
+
+# HTTP redirect
+server {
+    listen      80;
+    listen      [::]:80;
+    server_name my.domain;
+    return      301 https://my.domain$request_uri;
+}
+```
