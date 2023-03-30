@@ -27,7 +27,7 @@ class ToBeMappedYouTrackIssueInfoCreator(
       EventType.ONE_DAY_EVENT -> {
         val dateTimeFieldInfo = OneDayIssueDateTimeFieldInfo(
           fieldName = dateTimeConfig.fieldNames[0],
-          zoneId = dateTimeConfig.zoneId
+          zoneId = dateTimeConfig.zoneId,
         )
         OneDayIssueInfo(
           json = json,
@@ -37,19 +37,19 @@ class ToBeMappedYouTrackIssueInfoCreator(
         )
       }
 
-      EventType.DURATION_DATETIME_EVENT -> {
-        val dateTimeFieldInfo = DurationDateTimeIssueDateTimeFieldInfo(
-          startFieldName = dateTimeConfig.fieldNames[0],
-          durationFieldName = dateTimeConfig.fieldNames[1],
-          defaultDuration = dateTimeConfig.defaultDuration,
-        )
-        DurationDateTimeIssueInfo(
-          json = json,
-          dateTimeFieldInfo = dateTimeFieldInfo,
-          alarmSetting = alarmSetting,
-          otherMappings = otherStringMappings,
-        )
-      }
+//      EventType.DURATION_DATETIME_EVENT -> {
+//        val dateTimeFieldInfo = DurationDateTimeIssueDateTimeFieldInfo(
+//          startFieldName = dateTimeConfig.fieldNames[0],
+//          durationFieldName = dateTimeConfig.fieldNames[1],
+//          defaultDuration = dateTimeConfig.defaultDuration,
+//        )
+//        DurationDateTimeIssueInfo(
+//          json = json,
+//          dateTimeFieldInfo = dateTimeFieldInfo,
+//          alarmSetting = alarmSetting,
+//          otherMappings = otherStringMappings,
+//        )
+//      }
     }
   }
 

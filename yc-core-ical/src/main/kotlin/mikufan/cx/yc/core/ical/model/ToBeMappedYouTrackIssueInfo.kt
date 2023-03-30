@@ -33,11 +33,11 @@ data class OneDayIssueInfo(
   override val eventType: EventType = EventType.ONE_DAY_EVENT
 }
 
-data class DurationDateTimeIssueInfo(
-  override val json: YouTrackIssueJson,
-  override val dateTimeFieldInfo: DurationDateTimeIssueDateTimeFieldInfo,
-  override val alarmSetting: AlarmSetting?,
-  override val otherMappings: OtherStringMappings,
-) : ToBeMappedYouTrackIssueInfo {
-  override val eventType: EventType = EventType.DURATION_DATETIME_EVENT
-}
+// data class DurationDateTimeIssueInfo(
+//  override val json: YouTrackIssueJson,
+//  override val dateTimeFieldInfo: DurationDateTimeIssueDateTimeFieldInfo,
+//  override val alarmSetting: AlarmSetting?,
+//  override val otherMappings: OtherStringMappings,
+// ) : ToBeMappedYouTrackIssueInfo {
+//  override val eventType: EventType = EventType.DURATION_DATETIME_EVENT
+// }
