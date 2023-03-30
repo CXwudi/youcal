@@ -22,7 +22,7 @@ Click on each module for more information:
 
 Application modules:
 
-- [yc-app-cli](yc-app-cli/README.md): The CLI application to export YouTrack Issue Due to .ics file.
+- [yc-app-cli](yc-app-cli/README.md): The CLI application to export YouTrack Issues from a search query to .ics file.
 
 Library modules:
 
