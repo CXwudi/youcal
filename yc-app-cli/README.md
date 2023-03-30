@@ -29,7 +29,7 @@ in [`application.yml`](src/main/resources/application.yml).
 
 Unfortunately, I couldn't make the auto-generated configuration properties metadata work ☹,
 so there is no documentation on `application.yml`.
-Instead, documentation is written on `@ConfigurationProperties` classes, see you would need to look at source codes
+Instead, documentation is written on `@ConfigurationProperties` classes, so you would need to look at source codes
 in [`mikufan.cx.yc.cliapp.config` package](src/main/kotlin/mikufan/cx/yc/cliapp/config) to check the documentation 😔.
 
 You can also check [`Acceptance1Test`](src/test/kotlin/mikufan/cx/yc/cliapp/MainAcceptanceTest.kt) for a sample usage.
