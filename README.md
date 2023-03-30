@@ -11,6 +11,8 @@ longer working for me)
 For JetBrains Staffs: If you want to reuse some part of this code, just make sure you credit a link to this repo in your
 own repo
 
+Also for everyone, feel free to fork this repo and modify it in any way you like. 🙂
+
 ## Common Prerequisites
 
 - Java 17
