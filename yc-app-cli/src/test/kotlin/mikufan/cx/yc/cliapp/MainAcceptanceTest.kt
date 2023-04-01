@@ -2,8 +2,8 @@ package mikufan.cx.yc.cliapp
 
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.style.ShouldSpec
-import mikufan.cx.yc.apiclient.yt.util.SpringBootTestWithTestProfile
 import mikufan.cx.yc.cliapp.util.EnabledByEnvExtension
+import mikufan.cx.yc.cliapp.util.SpringBootTestWithTestProfile
 
 /**
  * This must be run with custom YouTrack URI and bearer token, see [EnabledByEnvExtension]
@@ -28,7 +28,7 @@ import mikufan.cx.yc.cliapp.util.EnabledByEnvExtension
     "cliapp.other-mapping.list[2].to-field-name=TRANSP",
     "cliapp.other-mapping.list[3].from-field-name=Submodule",
     "cliapp.other-mapping.list[3].to-field-name=CATEGORIES",
-  ]
+  ],
 )
 class Acceptance1Test(
   private val main: Main,
