@@ -128,6 +128,7 @@ class ICal4jPoc : ShouldSpec({
     should("create a dtstart with timezone") {
       val dtStart = DtStart(ZonedDateTime.of(2022, 12, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")))
       println("dtStart = $dtStart")
+      println("getDate = ${dtStart.date}")
     }
   }
   context("VALARM") {

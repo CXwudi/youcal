@@ -36,7 +36,7 @@ dep-kotest-extensions-spring = "io.kotest.extensions:kotest-extensions-spring:1.
 dep-mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:4.1.0"
 dep-mockk = "io.mockk:mockk:1.13.4"
 dep-spring-mockk = "com.ninja-squad:springmockk:4.0.2"
-dep-ical4j = "org.mnode.ical4j:ical4j:4.0.0-beta6"
+dep-ical4j = "org.mnode.ical4j:ical4j:4.0.0-beta7"
 
 [plugins]
 # plugins that are used in main build but not in precompiled script plugins
