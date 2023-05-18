@@ -3,16 +3,8 @@
   "extends": [
     "config:base",
     ":automergeMinor",
-    ":prHourlyLimitNone",
-    ":automergeBranch",
-    "schedule:monthly"
+    ":automergeBranch"
   ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    "automergeType": "branch",
-    "platformAutomerge": true
-  },
   "commitMessageAction": "⬆ upgrade",
   "timezone": "America/Toronto"
 }
