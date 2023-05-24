@@ -1,5 +1,7 @@
+package my.mixin
+
 plugins {
-  id("my.jvm-root")
+  id("my.root.jvm")
   application
 }
 

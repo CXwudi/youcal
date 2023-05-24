@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
   id("my.kotlin-spring-lib")
-  id("my.spring-boot-mockk-mixin")
 }
 
 dependencies {

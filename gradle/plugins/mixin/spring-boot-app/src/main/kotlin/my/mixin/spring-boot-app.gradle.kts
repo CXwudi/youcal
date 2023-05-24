@@ -1,12 +1,15 @@
-import my.mixin.springboot.MySpringBootAppExtension
-import my.mixin.springboot.MySpringBootLoggingFramework
+package my.mixin
+
+import my.mixin.springboot.app.MySpringBootAppExtension
+import my.mixin.springboot.app.MySpringBootLoggingFramework
+import my.mixin.springboot.app.internal.determineEffectiveLoggingFramework
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 /**
  * requires spring-boot-mixin
  */
 plugins {
-  id("my.jvm-root")
   // every spring app project must apply this plugin, this plugin is not just simply wrap a boot jar,
   // but also configure kotlin and Java compiler compilation parameters to make json or reflection work correctly.
   // see https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#reacting-to-other-plugins.java.
@@ -15,21 +18,22 @@ plugins {
 }
 
 // taken from https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#packaging-executable.and-plain-archives
-tasks.named<BootJar>("bootJar") {
+tasks.named<BootJar>(SpringBootPlugin.BOOT_JAR_TASK_NAME) {
   archiveClassifier.set("boot")
 }
 
-tasks.named<Jar>("jar") {
+tasks.named<Jar>(JavaPlugin.JAR_TASK_NAME) {
   archiveClassifier.set("")
 }
 
-// this extension should only be used in the spring boot app
 extensions.create<MySpringBootAppExtension>("mySpringBootApp")
 
 afterEvaluate {
   val ext = this.extensions.getByType(MySpringBootAppExtension::class.java)
-  if (ext.loggingFramework.get() == MySpringBootLoggingFramework.LOG4J2) {
-    // we must use the configuration excluding method because the spring lib is still using logback,
+
+  val effectiveChoice = determineEffectiveLoggingFramework(ext)
+  if (effectiveChoice == MySpringBootLoggingFramework.LOG4J2) {
+    // we must use the configuration excluding method because the spring lib could still be using logback,
     // and it makes sense that the user would only want to change the logging framework on the app side
     // so that all spring lib modules can use whatever the spring app wants to use.
     this.configurations {
@@ -38,15 +42,7 @@ afterEvaluate {
       }
     }
     this.dependencies {
-      implementation("org.springframework.boot:spring-boot-starter-log4j2")
+      add("implementation", "org.springframework.boot:spring-boot-starter-log4j2")
     }
-//    this.dependencies {
-//      implementation("org.springframework.boot:spring-boot-starter-log4j2")
-//      modules {
-//        module("org.springframework.boot:spring-boot-starter-logging") { // instead of excluding, we can replace one module to another
-//          replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
-//        }
-//      }
-//    }
   }
 }

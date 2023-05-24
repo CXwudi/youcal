@@ -1,4 +1,7 @@
 dependencyResolutionManagement {
+  repositories {
+    gradlePluginPortal()
+  }
   versionCatalogs {
     create("libs") {
       from(files("../libs.versions.toml"))
@@ -6,6 +9,4 @@ dependencyResolutionManagement {
   }
 }
 
-rootDir.listFiles { file -> file.isDirectory && file.name.endsWith("-version-constraints") }?.forEach {
-  include(it.name)
-}
+include("root-settings-plugins")

@@ -1,9 +1,15 @@
+import kotlin.io.path.isDirectory
+import kotlin.io.path.isHidden
+import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.name
+
 pluginManagement {
   repositories {
     gradlePluginPortal()
     // google()
   }
   includeBuild("gradle/plugins") // use this to include our own convention plugins
+  includeBuild("gradle/settings") // use this to include our own convention plugins for settings.gradle.kts
 }
 
 dependencyResolutionManagement {
@@ -18,7 +24,8 @@ dependencyResolutionManagement {
 }
 
 plugins {
-  id("com.gradle.enterprise") version "3.13.2"
+  // my setting plugin that simply has some other setting plugins where versions are managed in version catalogs
+  id("my.root-settings-plugins")
 }
 
 gradleEnterprise {
@@ -28,8 +35,8 @@ gradleEnterprise {
   }
 }
 
-rootProject.name = "YouCal"
+rootProject.name = "gradle-learn-project"
 
-rootDir.listFiles { file -> file.isDirectory && !file.isHidden && file.name.startsWith("yc") }?.forEach {
-  include(it.name)
-}
+rootDir.toPath().listDirectoryEntries("yc-*")
+  .filter { it.isDirectory() && !it.isHidden() }
+  .forEach { include(it.name) }
