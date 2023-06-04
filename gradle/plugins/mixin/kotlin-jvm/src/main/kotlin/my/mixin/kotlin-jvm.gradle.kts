@@ -10,6 +10,9 @@ dependencies {
   implementation(kotlin("reflect"))
   implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+
+  testImplementation(platform("io.kotest:kotest-bom"))
+  testImplementation("io.kotest:kotest-runner-junit5")
 }
 
 kotlin {
@@ -23,4 +26,8 @@ kotlin {
       }
     }
   }
+}
+
+tasks.withType<Test>().configureEach {
+  useJUnitPlatform()
 }
