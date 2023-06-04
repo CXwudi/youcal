@@ -30,7 +30,6 @@ dependencies {
     // main build dependencies, be used in the actual app and lib build.gradle.kts
     api(libs.dep.kotlin.jvm.inline.logging)
     api(libs.dep.kotest.extensions.spring)
-    api(libs.dep.mockito.kotlin)
     api(libs.dep.mockk)
     api(libs.dep.spring.mockk)
   }
