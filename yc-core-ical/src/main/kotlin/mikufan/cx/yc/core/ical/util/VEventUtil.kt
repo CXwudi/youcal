@@ -19,13 +19,13 @@ fun VEvent.setDtEndWithZoneId(zonedDateTime: ZonedDateTime) {
 fun VEvent.setDtStartWithZoneId(localDateTime: LocalDateTime, zoneId: ZoneId) {
   val dtStart = DtStart(localDateTime)
   dtStart.add<TzId>(net.fortuna.ical4j.model.parameter.TzId(zoneId.id))
-  add(dtStart)
+  addProperty(dtStart)
 }
 
 fun VEvent.setDtEndWithZoneId(localDateTime: LocalDateTime, zoneId: ZoneId) {
   val dtEnd = DtEnd(localDateTime)
   dtEnd.add<TzId>(net.fortuna.ical4j.model.parameter.TzId(zoneId.id))
-  add(dtEnd)
+  addProperty(dtEnd)
 }
 
 fun VEvent.addCommonProperties(
@@ -33,7 +33,8 @@ fun VEvent.addCommonProperties(
   summary: String?,
   description: String?,
 ) {
-  id?.let { add(Uid(it)) }
-  summary?.let { add(Summary(it)) }
-  description?.let { add(Description(it)) }
+  id?.let { addProperty(Uid(it)) }
+  summary?.let { addProperty(Summary(it)) }
+  description?.let { addProperty(Description(it)) }
 }
+

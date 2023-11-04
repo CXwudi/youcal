@@ -4,6 +4,7 @@ import mikufan.cx.inlinelogging.KInlineLogging
 import mikufan.cx.yc.core.ical.model.ToBeMappedYouTrackIssueInfo
 import mikufan.cx.yc.core.ical.util.YouTrackIssueJson
 import mikufan.cx.yc.core.ical.util.addCommonProperties
+import mikufan.cx.yc.core.ical.util.addComponent
 import mikufan.cx.yc.core.ical.util.debugName
 import net.fortuna.ical4j.model.component.VEvent
 
@@ -26,7 +27,7 @@ class EventMapper(
     vEvent.addCommonPropertiesFrom(json)
     val alarmSetting = toBeMapped.alarmSetting
     alarmMapper.createAlarm(json, alarmSetting)?.let {
-      vEvent.add(it)
+      vEvent.addComponent(it)
     }
     val otherMappings = toBeMapped.otherMappings
     otherFieldsSetter.doMapAndSet(vEvent, json, otherMappings)

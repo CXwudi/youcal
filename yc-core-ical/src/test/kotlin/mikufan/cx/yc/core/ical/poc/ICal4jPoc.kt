@@ -2,17 +2,16 @@ package mikufan.cx.yc.core.ical.poc
 
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import mikufan.cx.yc.core.ical.util.addCommonProperties
-import mikufan.cx.yc.core.ical.util.setDtEndWithZoneId
-import mikufan.cx.yc.core.ical.util.setDtStartWithZoneId
-import mikufan.cx.yc.core.ical.util.toICalTimeZone
+import mikufan.cx.yc.core.ical.util.*
 import net.fortuna.ical4j.model.Calendar
 import net.fortuna.ical4j.model.Property
 import net.fortuna.ical4j.model.component.VAlarm
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.model.parameter.Related
 import net.fortuna.ical4j.model.property.*
-import java.time.Duration
+import net.fortuna.ical4j.model.property.Description
+import java.time.Duration as JavaDuration
+import net.fortuna.ical4j.model.property.Duration as ICal4jDuration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -39,7 +38,7 @@ fun createVEvent(
   description: String? = null,
 ): VEvent = VEvent().apply {
   setDtStartWithZoneId(startZonedDateTime)
-  add(Duration(duration))
+  add<VEvent>(ICal4jDuration(duration))
   addCommonProperties(id, summary, description)
 }
 
@@ -56,7 +55,7 @@ class ICal4jPoc : ShouldSpec({
           LocalDate.of(2022, 5, 4),
           "A 3 day event",
         ).apply {
-          add(Description("Description of the event"))
+          addProperty(Description("Description of the event"))
         }
         event.getProperty<DtStart<*>>(Property.DTSTART).get().apply {
           date shouldBe LocalDate.of(2022, 5, 1)
@@ -73,7 +72,7 @@ class ICal4jPoc : ShouldSpec({
           LocalDate.of(2022, 5, 1),
           "An one day event",
         ).apply {
-          add(Description("Description of the event"))
+          addProperty(Description("Description of the event"))
         }
         event.getProperty<DtStart<*>>(Property.DTSTART).get().date shouldBe LocalDate.of(2022, 5, 1)
         event.getProperty<DtEnd<*>>(Property.DTEND).isEmpty shouldBe true
@@ -85,10 +84,10 @@ class ICal4jPoc : ShouldSpec({
       should("create a 36 hours hackathon") {
         val event = createVEvent(
           ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
-          Duration.ofHours(36),
+          JavaDuration.ofHours(36),
           summary = "A 36 hours hackathon",
         ).apply {
-          add(Description("Description of the event"))
+          addProperty(Description("Description of the event"))
         }
         println("event = \n$event")
       }
@@ -99,7 +98,7 @@ class ICal4jPoc : ShouldSpec({
           ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
           summary = "A 36 hours hackathon",
         ).apply {
-          add(Description("Description of the event"))
+          addProperty(Description("Description of the event"))
         }
         println("event = \n$event")
       }
@@ -107,13 +106,13 @@ class ICal4jPoc : ShouldSpec({
       xshould("create using timestamp and timezone explicitly") {
         // this won't work
         val vEvent = VEvent().apply {
-          add(
+          addProperty(
             DtStart(Instant.ofEpochSecond(1671147000)).apply {
               add<TzId>(net.fortuna.ical4j.model.parameter.TzId("Asia/Shanghai"))
             },
           )
-          add(Duration(Duration.ofHours(36)))
-          add(Summary("A 36 hours hackathon"))
+          addProperty(ICal4jDuration(JavaDuration.ofHours(36)))
+          addProperty(Summary("A 36 hours hackathon"))
         }
         println("vEvent = \n$vEvent")
       }
@@ -134,19 +133,19 @@ class ICal4jPoc : ShouldSpec({
   context("VALARM") {
     should("add an alarm") {
       val alarm = VAlarm().apply {
-        val trigger = Trigger(Duration.ofMinutes(-10)).apply {
+        val trigger = Trigger(JavaDuration.ofMinutes(-10)).apply {
           add<RelatedTo>(Related.END)
         }
-        add(Action("DISPLAY"))
-        add(trigger)
+        addProperty(Action("DISPLAY"))
+        addProperty(trigger)
       }
       val event = createVEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
         ZonedDateTime.of(2022, 5, 2, 20, 30, 0, 0, ZoneId.of("Asia/Shanghai")),
         summary = "A 36 hours hackathon",
       ).apply {
-        add(Description("Description of the event"))
-        add(alarm)
+        addProperty(Description("Description of the event"))
+        addComponent(alarm)
       }
       println("event = \n$event")
     }
@@ -156,13 +155,13 @@ class ICal4jPoc : ShouldSpec({
     val javaZoneId = ZoneId.of("Canada/Eastern")
 
     should("create calendar with timezone and two events") {
-      val alarm = VAlarm(Duration.ofMinutes(-10)).apply {
-        add(Action("DISPLAY"))
-        add(Description("A Reminder"))
+      val alarm = VAlarm(JavaDuration.ofMinutes(-10)).apply {
+        addProperty(Action("DISPLAY"))
+        addProperty(Description("A Reminder"))
       }
       val calendar = Calendar().apply {
-        add(javaZoneId.toICalTimeZone().vTimeZone)
-        add(ProdId("Calendar1"))
+        addComponent(javaZoneId.toICalTimeZone().vTimeZone)
+        addProperty(ProdId("Calendar1"))
       }.fluentTarget.withDefaults().fluentTarget
       val event1 = createVEvent( // create a new event
         ZonedDateTime.of(2022, 5, 1, 8, 30, 0, 0, javaZoneId.toICalTimeZone().toZoneId()),
@@ -170,15 +169,15 @@ class ICal4jPoc : ShouldSpec({
         "H1",
         "A 36 hours hackathon",
       ).apply {
-        add(Description("Description of the event1"))
-        add(alarm)
+        addProperty(Description("Description of the event1"))
+        addComponent(alarm)
       }
-      val event2 = VEvent(Instant.ofEpochMilli(1672628730081), Duration.ofHours(12), "A 12 hour event").apply {
-        add(Uid("H2"))
-        add(Description("Description of the event2"))
-        add(alarm)
+      val event2 = VEvent(Instant.ofEpochMilli(1672628730081), JavaDuration.ofHours(12), "A 12 hour event").apply {
+        addProperty(Uid("H2"))
+        addProperty(Description("Description of the event2"))
+        addComponent(alarm)
       }
-      calendar.add(event1).add(event2)
+      calendar.addComponent(event1).addComponent(event2)
       calendar.validate().entries.forEach {
         println("error = $it")
       }
