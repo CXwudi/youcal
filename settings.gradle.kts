@@ -35,7 +35,7 @@ gradleEnterprise {
   }
 }
 
-rootProject.name = "gradle-learn-project"
+rootProject.name = "YouCal"
 
 rootDir.toPath().listDirectoryEntries("yc-*")
   .filter { it.isDirectory() && !it.isHidden() }
