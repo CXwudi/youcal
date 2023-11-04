@@ -1,9 +1,9 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
   id("my.kotlin-spring-app")
-  id("my.mixin.app") // to generate a run script version of this app
   alias(libs.plugins.graalvm.native.image)
 }
+
+version = "1.0.0"
 
 dependencies {
   implementation(project(":yc-core-ical"))
