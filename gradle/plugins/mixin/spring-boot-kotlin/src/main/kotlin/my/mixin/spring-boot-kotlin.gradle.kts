@@ -8,15 +8,22 @@ plugins {
   kotlin("plugin.spring")
 }
 
-configurations {
-  all {
+fun DependencyHandlerScope.sbs(dep: String? = null, version: String? = null) =
+  "org.springframework.boot:spring-boot-starter${dep?.let { "-$it" } ?: ""}${version?.let { ":$it" } ?: ""}"
+
+dependencies {
+  versionConstraints(platform("org.springframework.boot:spring-boot-dependencies"))
+  implementation(sbs())
+  // both spring lib and app potentially need this.
+  // for spring app, adding this gives intellij auto-complete for application.yml
+  annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+  // with spring boot, you are pretty much fixed to use spring-boot-starter-test, which uses junit 5,
+  // so don't bother extracting spring-boot-starter-test to a separate mixin...
+  implementation("com.github.CXwudi:kotlin-jvm-inline-logging")
+  testImplementation(sbs("test")) {
     exclude(group = "org.mockito")
     exclude(group = "org.mockito.kotlin")
   }
-}
-
-dependencies {
-  implementation("com.github.CXwudi:kotlin-jvm-inline-logging")
   testImplementation("io.kotest.extensions:kotest-extensions-spring")
   testImplementation("io.mockk:mockk")
   testImplementation("com.ninja-squad:springmockk")
