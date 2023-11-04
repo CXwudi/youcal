@@ -43,9 +43,9 @@ class AlarmMapper {
     }
 
     return VAlarm().apply {
-      add(Action(Action.VALUE_DISPLAY))
-      add(trigger)
-      add(Description(fullDescription))
+      addProperty(Action(Action.VALUE_DISPLAY))
+      addProperty(trigger)
+      addProperty(Description(fullDescription))
     }
   }
 

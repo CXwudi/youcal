@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
   DateTimeConfigRaw::class,
   IOConfig::class,
   OtherMappingConfigRaw::class,
-    StringMappingRaw::class,
+  StringMappingRaw::class,
   SearchConfig::class,
 )
 class ReflectionHintRegister

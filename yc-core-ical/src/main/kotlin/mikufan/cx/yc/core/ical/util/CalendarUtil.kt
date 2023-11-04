@@ -27,8 +27,8 @@ fun Calendar.addCommonStuffs(
   zoneId: ZoneId?,
   vararg events: VEvent,
 ) {
-  add(ProdId(prodId))
-  add(Version(Version.VALUE_2_0, Version.VALUE_2_0))
-  zoneId?.let { add(it.toICalTimeZone().vTimeZone) }
-  events.forEach { add(it) }
+  addProperty(ProdId(prodId))
+  addProperty(Version(Version.VALUE_2_0, Version.VALUE_2_0))
+  zoneId?.let { addComponent(it.toICalTimeZone().vTimeZone) }
+  events.forEach { addComponent(it) }
 }
