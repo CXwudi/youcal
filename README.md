@@ -17,8 +17,8 @@ This is open-source project, so feel free to fork this repo and modify it in any
 
 ## Common Prerequisites
 
-- Java 17
-    - Optionally GraalVM 22.3.0 above with `native-image` installed
+- Java 21
+    - Optionally GraalVM with `native-image` installed
 
 ## Documentation
 
