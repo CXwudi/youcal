@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory
-import java.time.Duration
 
 /**
  * @author CX无敌
@@ -38,9 +37,8 @@ class WebClientAutoConfiguration {
   @ConditionalOnMissingBean
   @ConditionalOnBean(WebClient::class)
   fun httpServiceProxyFactory(wc: WebClient): HttpServiceProxyFactory {
-    val webClientAdapter = WebClientAdapter.forClient(wc)
-    return HttpServiceProxyFactory.builder(webClientAdapter)
-      .blockTimeout(Duration.ofSeconds(10))
+    val webClientAdapter = WebClientAdapter.create(wc)
+    return HttpServiceProxyFactory.builderFor(webClientAdapter)
       .build()
   }
 }
