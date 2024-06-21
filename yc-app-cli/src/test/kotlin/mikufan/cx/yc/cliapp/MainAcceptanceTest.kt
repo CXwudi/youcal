@@ -12,7 +12,7 @@ import mikufan.cx.yc.cliapp.util.SpringBootTestWithTestProfile
  */
 @SpringBootTestWithTestProfile(
   customProperties = [
-    "cliapp.search.query=for: me State: Open,Reopened sort by: {Due Date} asc ",
+    "cliapp.search.query=#{All with Dues}",
     "cliapp.datetime.event-type=ONE_DAY_EVENT",
     "cliapp.datetime.field-names=Due Date",
     "cliapp.alarm.period-field-name=Estimation",
