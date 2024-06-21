@@ -72,7 +72,8 @@
       {
         "value": {
           "id": "P1DT4H",
-          "$type": "PeriodValue"
+          "$type": "PeriodValue",
+          "minutes": 1234
         },
         "name": "Estimation",
         "id": "127-2",
@@ -161,7 +162,8 @@
       {
         "value": {
           "id": "PT2H",
-          "$type": "PeriodValue"
+          "$type": "PeriodValue",
+          "minutes": 1234
         },
         "name": "Estimation",
         "id": "127-2",
@@ -250,7 +252,8 @@
       {
         "value": {
           "id": "P2DT7H30M",
-          "$type": "PeriodValue"
+          "$type": "PeriodValue",
+          "minutes": 1234
         },
         "name": "Spent time",
         "id": "127-3",
