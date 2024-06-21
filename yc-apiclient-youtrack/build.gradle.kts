@@ -9,8 +9,8 @@ dependencies {
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-  kotlinOptions {
-    freeCompilerArgs = freeCompilerArgs + listOf("-Xjvm-default=all")
+kotlin {
+  compilerOptions {
+    freeCompilerArgs = freeCompilerArgs.get() + "-Xjvm-default=all"
   }
 }
