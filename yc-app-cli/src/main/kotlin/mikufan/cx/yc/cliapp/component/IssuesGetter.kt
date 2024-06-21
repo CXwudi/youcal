@@ -32,7 +32,8 @@ class IssuesGetter(
         "idReadable",
         "summary",
         "description",
-        "customFields(name,id,value(name,id))"
+        "customFields(name,id,value(name,id,minutes))" // added minutes for the duration value,
+        // required by AlarmMapper as the string representation can contain an invalid P1W format
       ) + youtrackFieldNames,
       customFields = customFieldNames,
       pageSize = searchConfig.pageSize,

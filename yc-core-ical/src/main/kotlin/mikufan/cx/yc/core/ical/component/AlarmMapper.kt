@@ -18,6 +18,9 @@ import java.time.Duration
  * 2023-01-03
  */
 class AlarmMapper {
+
+  companion object {
+  }
   fun createAlarm(json: YouTrackIssueJson, alarmSetting: AlarmSetting?): VAlarm? {
     if (alarmSetting == null) {
       log.info { "No alarm setting for ${json.debugName}, skipping alarm creation" }
@@ -93,8 +96,8 @@ class AlarmMapper {
       log.debug { "${json.debugName} have empty or null value in the custom field $fieldName for creating alarm" }
       return null
     }
-    val durationString = valueJson["id"].asText()
-    return Duration.parse(durationString).let {
+    val durationMinutes = valueJson["minutes"].asLong()
+    return Duration.ofMinutes(durationMinutes).let {
       if (isNegative) {
         it.negated()
       } else {
