@@ -41,7 +41,7 @@ class DateTimeFieldSetter {
     } else {
       val startDateInstant = Instant.ofEpochMilli(startDateJsonNode.asLong())
       val startDate = startDateInstant.atZone(dateTimeFieldInfo.zoneId).toLocalDate()
-      vEvent.add(DtStart(startDate))
+      vEvent.addProperty(DtStart(startDate))
     }
   }
 
