@@ -97,7 +97,8 @@ class AlarmMapper {
       return null
     }
     val durationMinutes = valueJson["minutes"].asLong()
-    return Duration.ofMinutes(durationMinutes).let {
+
+    return computeRealDuration(durationMinutes).let {
       if (isNegative) {
         it.negated()
       } else {
@@ -105,6 +106,21 @@ class AlarmMapper {
       }
     }
   }
+
+  /**
+   * Simulate how YouTrack represent the duration, where a day is 8 hours, and a week is 5 days only to exclude weekend
+   */
+  private fun computeRealDuration(minutes: Long): Duration {
+    val hours = minutes / 60
+    val weeks = hours / (8 * 5)
+    val remainingHoursAfterWeeks = hours % (8 * 5)
+    val days = remainingHoursAfterWeeks / 8
+    val remainingHours = remainingHoursAfterWeeks % 8
+    val remainingMinutes = minutes % 60
+
+    return Duration.ofDays(weeks * 7 + days).plusHours(remainingHours).plusMinutes(remainingMinutes)
+  }
+
 }
 
 private val log = KInlineLogging.logger()
