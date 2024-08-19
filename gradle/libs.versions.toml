@@ -30,7 +30,7 @@ bom-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.1"
 pplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 pplugin-kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
 pplugin-spring-boot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "springBoot" }
-splugin-gradle-enterprise = "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.17.6"
+splugin-gradle-enterprise = "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18"
 splugin-foojay-resolver = "org.gradle.toolchains:foojay-resolver:0.8.0"
 
 # dependencies, naming convention: dep-<name>
