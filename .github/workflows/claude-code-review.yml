@@ -2,7 +2,7 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
     # Optional: Only run on specific file changes
     # paths:
     #   - "src/**/*.ts"
@@ -15,7 +15,7 @@ on:
 jobs:
   claude-review:
     # Skip renovatebot PRs unless explicitly mentioned with @claude in title, body, or comments
-    # Also only run on issue_comment if it's on a PR and contains @claude
+    # Also only run on issue_comment if it's on a PR and starts with '@claude review'
     if: |
       (github.event_name == 'pull_request' && (
         github.event.pull_request.user.login != 'renovate[bot]' ||
@@ -24,7 +24,7 @@ jobs:
       )) ||
       (github.event_name == 'issue_comment' &&
         github.event.issue.pull_request &&
-        contains(github.event.comment.body, '@claude'))
+        startsWith(github.event.comment.body, '@claude review'))
 
     runs-on: ubuntu-latest
     permissions:
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
