@@ -23,7 +23,7 @@ dependencies = [
     "pydantic>=2.9.0",
     "pydantic-settings>=2.5.0",
     "click>=8.1.0",
-    "pyyaml>=6.0.0",
+    "pyyaml>=6.0.1",
 ]
 
 [project.optional-dependencies]
