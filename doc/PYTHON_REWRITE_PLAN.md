@@ -192,11 +192,7 @@ uv run ruff check src/
 
 ```python
 async def get_issues(client: YouTrackClient, query: str) -> list[VEvent]:
-    issues = []
-    async for issue in client.get_issues_lazy(query):
-        event = await map_to_event(issue)
-        issues.append(event)
-    return issues
+    return [map_to_event(issue) async for issue in client.get_issues_lazy(query)]
 ```
 
 ### Configuration Example
