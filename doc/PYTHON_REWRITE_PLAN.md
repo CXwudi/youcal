@@ -248,7 +248,7 @@ To ensure same functionality:
 - [ ] Configuration validation
 - [ ] .ics file output
 - [ ] Logging and error handling
-- [ ] Async/concurrent processing
+- [ ] Async processing for I/O-bound tasks; sequential processing for CPU-bound tasks (acceptable for up to 10,000 items)
 
 ## 7. Testing Strategy
 
