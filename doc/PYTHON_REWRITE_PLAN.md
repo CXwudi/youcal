@@ -101,9 +101,6 @@ This module will be completely independent and can be used in serverless environ
 - `YouTrackClient` class using `httpx.AsyncClient`
 - Pagination iterator for lazy loading
 - Authentication handling (Bearer token)
-- [ ] Implement `YouTrackClient` with basic authentication
-
-- [ ] Implement `YouTrackClient` with Bearer Token authentication
 
 #### iCalendar Generation (`youcal.core.ical`)
 
