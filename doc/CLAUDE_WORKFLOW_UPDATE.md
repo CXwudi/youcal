@@ -17,7 +17,7 @@ Add the following steps after the "Give permission to gradlew" step (after line 
           python-version-file: '.python-version'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v1
         with:
           enable-cache: true
 
