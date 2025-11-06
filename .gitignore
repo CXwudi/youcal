@@ -77,4 +77,3 @@ wheels/
 htmlcov/
 .mypy_cache/
 .ruff_cache/
-uv.lock
