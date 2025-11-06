@@ -30,6 +30,15 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Give permission to gradlew
+        run: chmod +x gradlew
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
