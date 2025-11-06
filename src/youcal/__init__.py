@@ -1,3 +1,9 @@
 """YouCal - Export YouTrack issues to iCalendar format."""
 
-__version__ = "0.1.0"
+from importlib.metadata import PackageNotFoundError, version
+
+try:
+    __version__ = version("youcal")
+except PackageNotFoundError:
+    # package is not installed
+    __version__ = "unknown"
