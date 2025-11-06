@@ -5,6 +5,7 @@ This document outlines the comprehensive plan for rewriting YouCal from Kotlin t
 ## Current Implementation Overview
 
 **Technology Stack:**
+
 - **Language:** Kotlin with Spring Boot
 - **Build System:** Gradle with Kotlin DSL
 - **Key Dependencies:**
@@ -17,6 +18,7 @@ This document outlines the comprehensive plan for rewriting YouCal from Kotlin t
   3. `yc-app-cli` - CLI application
 
 **Functionality:**
+
 - Queries YouTrack issues via REST API
 - Maps YouTrack issues to iCalendar VEvent components
 - Exports events to .ics files
@@ -26,7 +28,7 @@ This document outlines the comprehensive plan for rewriting YouCal from Kotlin t
 
 ## 1. Project Structure
 
-```
+```text
 youcal/
 ├── pyproject.toml              # Project metadata and dependencies (uv-managed)
 ├── uv.lock                     # Lock file for reproducible installs
@@ -95,13 +97,16 @@ youcal/
 This module will be completely independent and can be used in serverless environments (AWS Lambda, Azure Functions, etc.).
 
 #### API Client (`youcal.core.api`)
+
 - `YouTrackClient` class using `httpx.AsyncClient`
 - Pagination iterator for lazy loading
 - Authentication handling (Bearer token)
 - [ ] Implement `YouTrackClient` with basic authentication
-+ [ ] Implement `YouTrackClient` with Bearer Token authentication
+
+- [ ] Implement `YouTrackClient` with Bearer Token authentication
 
 #### iCalendar Generation (`youcal.core.ical`)
+
 - `EventMapper` - Maps YouTrack issues to VEvent
 - `AlarmMapper` - Handles alarm/reminder creation
 - `DateTimeFieldSetter` - Handles date/time field mapping
@@ -109,6 +114,7 @@ This module will be completely independent and can be used in serverless environ
 - Support for timezones using `zoneinfo`
 
 #### Configuration Models (`youcal.core.config`)
+
 - Pydantic models for all configuration
 - Validation rules
 - Type-safe configuration handling
@@ -116,12 +122,14 @@ This module will be completely independent and can be used in serverless environ
 ### 3.2 CLI Module (`youcal.cli`)
 
 #### Main Application
+
 - Entry point using Click or Typer
 - Configuration loading from YAML/JSON/env vars
 - Progress indicators for long-running operations
 - Error handling and user-friendly messages
 
 #### Configuration Loading
+
 - Support multiple config sources (similar to Spring Boot):
   - YAML/JSON files
   - Environment variables
@@ -131,6 +139,7 @@ This module will be completely independent and can be used in serverless environ
 ## 4. Migration Strategy
 
 ### Phase 1: Core API Client (Week 1-2)
+
 - [ ] Set up Python project structure with `pyproject.toml` and `uv`
 - [ ] Implement `YouTrackClient` with basic authentication
 - [ ] Implement issue querying with pagination
@@ -138,6 +147,7 @@ This module will be completely independent and can be used in serverless environ
 - [ ] Document API usage
 
 ### Phase 2: iCalendar Generation (Week 2-3)
+
 - [ ] Implement `EventMapper` and supporting classes
 - [ ] Add datetime field mapping logic
 - [ ] Implement alarm/reminder support
@@ -145,6 +155,7 @@ This module will be completely independent and can be used in serverless environ
 - [ ] Test with various YouTrack issue formats
 
 ### Phase 3: CLI Application (Week 3-4)
+
 - [ ] Implement CLI using Click/Typer
 - [ ] Add configuration loading system
 - [ ] Implement main orchestration logic
@@ -152,6 +163,7 @@ This module will be completely independent and can be used in serverless environ
 - [ ] Handle errors gracefully
 
 ### Phase 4: Testing & Documentation (Week 4-5)
+
 - [ ] Write comprehensive unit tests (target >80% coverage)
 - [ ] Write integration tests
 - [ ] Create user documentation
@@ -159,6 +171,7 @@ This module will be completely independent and can be used in serverless environ
 - [ ] Performance testing
 
 ### Phase 5: Packaging & Distribution (Week 5-6)
+
 - [ ] Set up PyPI packaging
 - [ ] Create Docker image
 - [ ] Add GitHub Actions for CI/CD
@@ -236,6 +249,7 @@ async def lambda_handler(event, context):
 ## 6. Feature Parity Checklist
 
 To ensure same functionality:
+
 - [ ] YouTrack API authentication
 - [ ] Issue querying with custom fields
 - [ ] Pagination support
@@ -253,17 +267,20 @@ To ensure same functionality:
 ## 7. Testing Strategy
 
 ### Unit Tests
+
 - Test each core component independently
 - Mock external API calls
 - Test configuration validation
 - Test edge cases and error conditions
 
 ### Integration Tests
+
 - Test against YouTrack API (with test account)
 - Validate generated .ics files
 - Test full end-to-end workflow
 
 ### Performance Tests
+
 - Compare performance with Kotlin version
 - Test with large result sets
 - Measure memory usage
