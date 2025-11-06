@@ -43,3 +43,7 @@ build/
 
 ### Sensitive Info ###
 /.run/*Test.run.xml
+
+### Gemini ###
+.gemini/
+gha-creds-*.json
