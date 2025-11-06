@@ -106,7 +106,7 @@ This module will be completely independent and can be used in serverless environ
 - `AlarmMapper` - Handles alarm/reminder creation
 - `DateTimeFieldSetter` - Handles date/time field mapping
 - `CalendarBuilder` - Creates iCalendar objects
-- Support for timezones using `pytz` or `zoneinfo`
+- Support for timezones using `zoneinfo`
 
 #### Configuration Models (`youcal.core.config`)
 - Pydantic models for all configuration
