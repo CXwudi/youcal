@@ -39,6 +39,19 @@ jobs:
       - name: Give permission to gradlew
         run: chmod +x gradlew
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: '.python-version'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+        with:
+          enable-cache: true
+
+      - name: Install Python dependencies
+        run: uv sync --all-extras
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
