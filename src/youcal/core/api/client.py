@@ -80,7 +80,7 @@ class YouTrackClient:
         }
 
         if custom_fields:
-            params["customFields"] = custom_fields
+            params["customFields"] = ",".join(custom_fields)
 
         logger.debug(
             "Getting issues with query='%s', skip=%d, top=%d",
