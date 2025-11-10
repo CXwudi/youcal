@@ -54,7 +54,10 @@ class UsersApi:
 
     # Parse response into Pydantic model
     profile = UserProfile.model_validate(response_data)
-    logger.debug("Retrieved profile for user '%s' with timezone: %s", user_id, profile.timezone.id)
+    if profile.timezone:
+        logger.debug("Retrieved profile for user '%s' with timezone: %s", user_id, profile.timezone.id)
+    else:
+        logger.debug("Retrieved profile for user '%s' (no timezone data)", user_id)
 
     return profile
 
@@ -71,7 +74,7 @@ class UsersApi:
       httpx.HTTPError: If the API request fails
       ZoneInfoNotFoundError: If the timezone ID is invalid
     """
-    profile = await self.get_general_profile(user_id)
+    profile = await self.get_general_profile(user_id, fields="timezone(id)")
     timezone_id = profile.timezone.id
 
     logger.debug("User '%s' timezone: %s", user_id, timezone_id)
