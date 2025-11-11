@@ -54,10 +54,7 @@ class UsersApi:
 
     # Parse response into Pydantic model
     profile = UserProfile.model_validate(response_data)
-    if profile.timezone:
-        logger.debug("Retrieved profile for user '%s' with timezone: %s", user_id, profile.timezone.id)
-    else:
-        logger.debug("Retrieved profile for user '%s' (no timezone data)", user_id)
+    logger.debug("Retrieved profile for user '%s' with timezone: %s", user_id, profile.timezone.id)
 
     return profile
 

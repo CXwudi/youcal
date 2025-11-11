@@ -2,11 +2,12 @@
 
 import pytest
 
+from youcal.core.api.auth import YouTrackAuth
 from youcal.core.api.client import YouTrackClient
 
 
 @pytest.mark.asyncio
-async def test_client_context_manager(youtrack_auth) -> None:  # type: ignore[no-untyped-def]
+async def test_client_context_manager(youtrack_auth: YouTrackAuth) -> None:
   """Test that client can be used as an async context manager."""
   async with YouTrackClient(youtrack_auth) as client:
     assert client._client is not None
@@ -14,7 +15,7 @@ async def test_client_context_manager(youtrack_auth) -> None:  # type: ignore[no
 
 
 @pytest.mark.asyncio
-async def test_client_not_initialized_error(youtrack_auth) -> None:  # type: ignore[no-untyped-def]
+async def test_client_not_initialized_error(youtrack_auth: YouTrackAuth) -> None:
   """Test that accessing client before initialization raises error."""
   client = YouTrackClient(youtrack_auth)
 
@@ -23,7 +24,7 @@ async def test_client_not_initialized_error(youtrack_auth) -> None:  # type: ign
 
 
 @pytest.mark.asyncio
-async def test_client_get_request(youtrack_client) -> None:  # type: ignore[no-untyped-def]
+async def test_client_get_request(youtrack_client: YouTrackClient) -> None:
   """Test that client can make a GET request to YouTrack API.
 
   This test verifies basic connectivity to the YouTrack instance.
@@ -37,7 +38,7 @@ async def test_client_get_request(youtrack_client) -> None:  # type: ignore[no-u
 
 
 @pytest.mark.asyncio
-async def test_client_auth_header(youtrack_auth) -> None:  # type: ignore[no-untyped-def]
+async def test_client_auth_header(youtrack_auth: YouTrackAuth) -> None:
   """Test that client includes auth header in requests."""
   async with YouTrackClient(youtrack_auth) as client:
     # Check that the auth header is set on the client
@@ -46,7 +47,7 @@ async def test_client_auth_header(youtrack_auth) -> None:  # type: ignore[no-unt
 
 
 @pytest.mark.asyncio
-async def test_client_base_url(youtrack_auth) -> None:  # type: ignore[no-untyped-def]
+async def test_client_base_url(youtrack_auth: YouTrackAuth) -> None:
   """Test that client uses correct base URL."""
   async with YouTrackClient(youtrack_auth) as client:
     assert str(client.client.base_url) == youtrack_auth.api_base_url

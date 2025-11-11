@@ -60,6 +60,8 @@ class IssuesApi:
     }
 
     # Add custom fields if provided
+    # Note: httpx automatically formats list values as repeated query parameters
+    # e.g., ["type", "assignee"] → customFields=type&customFields=assignee
     if custom_fields:
       params["customFields"] = custom_fields
 

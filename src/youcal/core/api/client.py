@@ -24,7 +24,8 @@ class YouTrackClient:
       bearer_token="perm:xxx"
     )
     async with YouTrackClient(auth) as client:
-      issues = await client.issues.get_issues(query="project: MyProject")
+      issues_api = IssuesApi(client)
+      issues = await issues_api.get_issues(query="project: MyProject")
     ```
 
   Attributes:

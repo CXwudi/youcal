@@ -4,12 +4,13 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+from youcal.core.api.client import YouTrackClient
 from youcal.core.api.models import UserProfile
 from youcal.core.api.users import UsersApi
 
 
 @pytest.fixture
-def users_api(youtrack_client) -> UsersApi:  # type: ignore[no-untyped-def]
+def users_api(youtrack_client: YouTrackClient) -> UsersApi:
   """Provide UsersApi instance.
 
   Args:
@@ -22,7 +23,7 @@ def users_api(youtrack_client) -> UsersApi:  # type: ignore[no-untyped-def]
 
 
 @pytest.mark.asyncio
-async def test_get_general_profile_me(users_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_general_profile_me(users_api: UsersApi) -> None:
   """Test getting current user's general profile."""
   profile = await users_api.get_general_profile(user_id="me")
 
@@ -32,7 +33,7 @@ async def test_get_general_profile_me(users_api) -> None:  # type: ignore[no-unt
 
 
 @pytest.mark.asyncio
-async def test_get_general_profile_with_fields(users_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_general_profile_with_fields(users_api: UsersApi) -> None:
   """Test getting profile with specific fields."""
   profile = await users_api.get_general_profile(
     user_id="me",
@@ -44,7 +45,7 @@ async def test_get_general_profile_with_fields(users_api) -> None:  # type: igno
 
 
 @pytest.mark.asyncio
-async def test_get_timezone_me(users_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_timezone_me(users_api: UsersApi) -> None:
   """Test getting current user's timezone."""
   timezone = await users_api.get_timezone(user_id="me")
 
@@ -54,7 +55,7 @@ async def test_get_timezone_me(users_api) -> None:  # type: ignore[no-untyped-de
 
 
 @pytest.mark.asyncio
-async def test_get_timezone_default(users_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_timezone_default(users_api: UsersApi) -> None:
   """Test getting timezone with default user_id parameter."""
   timezone = await users_api.get_timezone()
 
@@ -63,7 +64,7 @@ async def test_get_timezone_default(users_api) -> None:  # type: ignore[no-untyp
 
 
 @pytest.mark.asyncio
-async def test_timezone_is_valid(users_api) -> None:  # type: ignore[no-untyped-def]
+async def test_timezone_is_valid(users_api: UsersApi) -> None:
   """Test that returned timezone is a valid ZoneInfo that can be used."""
   timezone = await users_api.get_timezone()
 

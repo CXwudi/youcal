@@ -2,12 +2,13 @@
 
 import pytest
 
+from youcal.core.api.client import YouTrackClient
 from youcal.core.api.issues import IssuesApi
 from youcal.core.api.models import YouTrackIssue
 
 
 @pytest.fixture
-def issues_api(youtrack_client) -> IssuesApi:  # type: ignore[no-untyped-def]
+def issues_api(youtrack_client: YouTrackClient) -> IssuesApi:
   """Provide IssuesApi instance.
 
   Args:
@@ -20,7 +21,7 @@ def issues_api(youtrack_client) -> IssuesApi:  # type: ignore[no-untyped-def]
 
 
 @pytest.mark.asyncio
-async def test_get_issues_basic(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_basic(issues_api: IssuesApi) -> None:
   """Test basic issue retrieval with minimal query.
 
   This test retrieves a small number of issues to verify the API works.
@@ -44,11 +45,12 @@ async def test_get_issues_basic(issues_api) -> None:  # type: ignore[no-untyped-
 
 
 @pytest.mark.asyncio
-async def test_get_issues_with_custom_fields(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_with_custom_fields(issues_api: IssuesApi) -> None:
   """Test issue retrieval with custom fields."""
   issues = await issues_api.get_issues(
     query="",
     fields=["id", "idReadable", "summary", "customFields(name,id,value(name,id))"],
+    custom_fields=["Due Date"],
     skip=0,
     top=3,
   )
@@ -63,7 +65,7 @@ async def test_get_issues_with_custom_fields(issues_api) -> None:  # type: ignor
 
 
 @pytest.mark.asyncio
-async def test_get_issues_pagination(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_pagination(issues_api: IssuesApi) -> None:
   """Test pagination by fetching two different pages."""
   page_size = 3
 
@@ -91,7 +93,7 @@ async def test_get_issues_pagination(issues_api) -> None:  # type: ignore[no-unt
 
 
 @pytest.mark.asyncio
-async def test_get_issues_empty_result(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_empty_result(issues_api: IssuesApi) -> None:
   """Test that querying with very restrictive criteria returns empty list."""
   # Query for issues with a very specific summary that doesn't exist
   issues = await issues_api.get_issues(
@@ -106,7 +108,7 @@ async def test_get_issues_empty_result(issues_api) -> None:  # type: ignore[no-u
 
 
 @pytest.mark.asyncio
-async def test_get_issues_lazy_basic(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_lazy_basic(issues_api: IssuesApi) -> None:
   """Test lazy issue retrieval."""
   count = 0
   max_issues = 10
@@ -128,7 +130,7 @@ async def test_get_issues_lazy_basic(issues_api) -> None:  # type: ignore[no-unt
 
 
 @pytest.mark.asyncio
-async def test_get_issues_lazy_pagination(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_lazy_pagination(issues_api: IssuesApi) -> None:
   """Test that lazy loading properly handles pagination."""
   page_size = 2
   collected_issues = []
@@ -152,7 +154,7 @@ async def test_get_issues_lazy_pagination(issues_api) -> None:  # type: ignore[n
 
 
 @pytest.mark.asyncio
-async def test_get_issues_lazy_with_start_at(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_lazy_with_start_at(issues_api: IssuesApi) -> None:
   """Test lazy loading with custom starting offset."""
   start_at = 2
   collected_issues = []
@@ -173,7 +175,7 @@ async def test_get_issues_lazy_with_start_at(issues_api) -> None:  # type: ignor
 
 
 @pytest.mark.asyncio
-async def test_get_issues_lazy_empty_query(issues_api) -> None:  # type: ignore[no-untyped-def]
+async def test_get_issues_lazy_empty_query(issues_api: IssuesApi) -> None:
   """Test lazy loading with query that returns no results."""
   count = 0
 
