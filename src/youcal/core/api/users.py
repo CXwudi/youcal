@@ -70,8 +70,11 @@ class UsersApi:
     Raises:
       httpx.HTTPError: If the API request fails
       ZoneInfoNotFoundError: If the timezone ID is invalid
+      ValueError: If the user has no timezone configured
     """
     profile = await self.get_general_profile(user_id, fields="timezone(id)")
+    if profile.timezone is None:
+      raise ValueError(f"User '{user_id}' has no timezone configured")
     timezone_id = profile.timezone.id
 
     logger.debug("User '%s' timezone: %s", user_id, timezone_id)
