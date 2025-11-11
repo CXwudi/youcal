@@ -107,6 +107,9 @@ class IssuesApi:
     Raises:
       httpx.HTTPError: If an API request fails
     """
+    if page_size <= 0:
+      raise ValueError("page_size must be greater than 0")
+
     skip = start_at
     still_has_more = True
 
