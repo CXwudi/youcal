@@ -1,4 +1,4 @@
-v2me: '▶️ Gemini Invoke'
+name: '▶️ Gemini Invoke'
 
 on:
   workflow_call:
