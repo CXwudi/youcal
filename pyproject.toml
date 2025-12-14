@@ -80,3 +80,8 @@ addopts = [
     "--cov=src/youcal",
     "--cov-report=term-missing",
 ]
+
+[dependency-groups]
+dev = [
+    "types-icalendar>=6.3.2.20251107",
+]
