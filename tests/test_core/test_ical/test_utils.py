@@ -2,9 +2,7 @@
 
 from datetime import timedelta
 
-import pytest
-
-from youcal.core.api.models import CustomField, CustomFieldValue, YouTrackIssue
+from youcal.core.api.models import CustomField, YouTrackIssue
 from youcal.core.ical.utils import (
   YouTrackDefaultDateTimeField,
   YouTrackFieldType,

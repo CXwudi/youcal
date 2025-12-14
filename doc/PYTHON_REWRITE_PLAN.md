@@ -145,11 +145,11 @@ This module will be completely independent and can be used in serverless environ
 
 ### Phase 2: iCalendar Generation (Week 2-3)
 
-- [ ] Implement `EventMapper` and supporting classes
-- [ ] Add datetime field mapping logic
-- [ ] Implement alarm/reminder support
-- [ ] Add timezone handling
-- [ ] Test with various YouTrack issue formats
+- [x] Implement `EventMapper` and supporting classes
+- [x] Add datetime field mapping logic
+- [x] Implement alarm/reminder support
+- [x] Add timezone handling
+- [x] Test with various YouTrack issue formats
 
 ### Phase 3: CLI Application (Week 3-4)
 

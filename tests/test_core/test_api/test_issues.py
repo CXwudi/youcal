@@ -179,7 +179,7 @@ async def test_get_issues_lazy_empty_query(issues_api: IssuesApi) -> None:
   """Test lazy loading with query that returns no results."""
   count = 0
 
-  async for issue in issues_api.get_issues_lazy(
+  async for _issue in issues_api.get_issues_lazy(
     query='summary: "NONEXISTENT_ISSUE_SUMMARY_XYZABC123"',
     fields=["id", "idReadable", "summary"],
     page_size=5,

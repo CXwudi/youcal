@@ -1,8 +1,8 @@
 """YouTrack API client."""
 
 import logging
-from typing import Any, Self
 from types import TracebackType
+from typing import Any, Self
 
 import httpx
 
