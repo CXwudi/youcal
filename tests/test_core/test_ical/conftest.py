@@ -1,6 +1,8 @@
 """Shared test fixtures for iCalendar tests."""
 
+import json
 from datetime import timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -15,6 +17,37 @@ from youcal.core.ical.models import (
   StringMapping,
   VEventField,
 )
+
+# Path to test fixtures
+FIXTURES_DIR = Path(__file__).parent / "fixtures"
+
+
+def load_json_issues(filename: str) -> list[YouTrackIssue]:
+  """Load YouTrack issues from a JSON fixture file.
+
+  Args:
+    filename: Name of the JSON file in the fixtures directory
+
+  Returns:
+    List of YouTrackIssue objects parsed from the JSON
+  """
+  filepath = FIXTURES_DIR / filename
+  with open(filepath) as f:
+    data = json.load(f)
+  return [YouTrackIssue.model_validate(issue) for issue in data]
+
+
+@pytest.fixture
+def issues_with_all_fields() -> list[YouTrackIssue]:
+  """Load issues with all custom fields populated."""
+  return load_json_issues("with-all-custom-fields-rsp-2023.json")
+
+
+@pytest.fixture
+def issues_with_missing_values() -> list[YouTrackIssue]:
+  """Load issues with some missing/null values."""
+  return load_json_issues("with-all-custom-fields-rsp-2023-but-missing-values.json")
+
 
 
 @pytest.fixture
